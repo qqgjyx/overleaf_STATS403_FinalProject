@@ -1,10 +1,5 @@
-%
-%  MAIN driver/organizer for slide presentation
-%
-
 \documentclass[aspectratio=169]{beamer}
 
-%%
 \makeatletter
 \defbeameroption{show only notes}[]% 
 {
@@ -12,17 +7,12 @@
 \beamer@notesnormalsfalse
 }
 \makeatother
-
 \setbeameroption{hide notes}
 
-%%  ... include packages
-
+%% ============ preamble
 \input{preamble/packages}
-
 \input{preamble/customization}
-
 \input{preamble/graphics}
-
 \input{preamble/extras}
 
 %% ============ set up the title slide and footer information
@@ -30,26 +20,110 @@
 \input{sections/title}
 
 % ========== bibliography
-\bibliography{HSI.bib}
+\bibliography{ref.bib}
 
 \begin{document}
 
+\frame{\titlepage}% the very first slide frame 
 
-\frame{\titlepage}                     % the very first slide frame 
+%%  ---------- Overview
+\begin{frame}
+\frametitle{``Vision Transformers Need Registers'': Overview}
 
-% \begin{frame}[noframenumbering,plain]
-%   \frametitle{Outline}
-%   \tableofcontents
-% \end{frame}
+\cite{darcetVisionTransformersNeed2024}, \textit{ICLR}, Vision Transformers Need Registers
 
-%%  ---------- Outline 
-% \part{Part I}
+\vspace{1em}
 
+\begin{itemize}
+    \item \textbf{Paper Link:} \href{https://openreview.net/forum?id=2dnO3LLiJ1}{https://openreview.net/forum?id=2dnO3LLiJ1}
+    \item \textbf{Repo. Link:} \href{https://github.com/kyegomez/Vit-RGTS}{https://github.com/kyegomez/Vit-RGTS} \quad (for replication)
 
+    \vspace{1em}
 
-
+    \item \textbf{TL;DR:}
+    \begin{itemize}
+        \item Vision Transformers (ViTs) exhibit \textbf{artifacts}: 
+        $$\boxed{\text{high-norm tokens in low-information regions}}$$
+        \item In both supervised and self-supervised; disrupt downstream tasks.
+        \item \textbf{Registers}: additional tokens; only for internal computation.
+        \item This approach:
+        \begin{itemize}
+            \item Achieves \textbf{SOTA} on dense prediction tasks.
+            \item Enables \textbf{object discovery} in large models.
+            \item Produces smoother \textbf{feature and attention maps}.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+\end{frame}
 
 %% ----------- Problems
+\begin{section}{Problems}
+%% ---frame 2
+\begin{frame}
+\frametitle{Motivation: Why Register Tokens?}
+
+\vspace{4.2em}
+$$
+\boxed{\textbf{Embedding images into generic features that can serve multiple purposes in CV}}
+$$
+\vspace{4.2em}
+\cite{loweDistinctiveImageFeatures2004}, Distinctive Image Features from Scale-Invariant Keypoints
+\begin{itemize}
+    \item SIFT.
+\end{itemize}
+Today, it still matters - ``Labels are expensive''.
+\begin{itemize}
+    \item Pretrain $\rightarrow$ extract features $\rightarrow$ downstream tasks.
+\end{itemize}
+\end{frame}
+%% ------------
+
+%% ---frame 3
+\begin{frame}
+\frametitle{Motivation: Why Register Tokens? (cont.)}
+
+$$
+\boxed{\textbf{Observed: } \text{In LOST, DINOv2 worse than DINOv1. } \quad \text{Analyze, fix these ViTs.}}
+$$
+
+\vspace{1em}
+
+\cite{caronEmergingPropertiesSelfsupervised2021}, \textit{ICCV}, Emerging Properties of Self-Supervised Vision Transformers
+
+\vspace{1em}
+
+\begin{itemize}
+    \item Sensible object segmentations can be obtained from the self-attention of the CLS query produced by the last attention layer.
+\end{itemize}
+
+\vspace{1em}
+
+\cite{simeoniLocalizingObjectsSelfsupervised2021}, \textit{BMVC}, Localizing Objects with Self-Supervised Transformers and no Labels
+
+\vspace{1em}
+
+\begin{itemize}
+    \item \textbf{LOST (Localizing Objects with Self-Supervised Transformers and no Labels):}
+    \begin{itemize}
+        \item Uses DINO features for unsupervised object detection.
+        \item Relies on foreground objects being well-activated in feature maps.
+        \item Starts from seed points and expands to localize full object regions.
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Motivation: Why Register Tokens? (cont.)}
+
+\begin{itemize}
+    \item \textbf{Observation:} Replacing DINOv1 with DINOv2 in the \textsc{LOST} algorithm led to significantly worse performance.
+    \item \textbf{Issue:} While DINOv1 produced clean, foreground-focused maps, DINOv2 and other ViTs showed \textbf{anomalous activations} in uninformative background regions.
+    \item \textbf{Insight:} The problem is not DINOv2 being worse, but DINOv1 being exceptionally clean.
+    \item \textbf{Approach:} Authors systematically analyze the anomaly, identify high-norm "artifact" tokens, and propose a universal fix.
+\end{itemize}
+\end{frame}
+\end{section}
 
 %% ----------- Methods
 
@@ -58,7 +132,6 @@
 
 
 %% ----------- Discussion
-
 
 %% -----------  Acknowledgement
 
@@ -70,7 +143,7 @@
 \section*{Bibliography}
 \appendix
 
-\begin{frame}[noframenumbering,plain,allowframebreaks]{Bibliography}
+\begin{frame}[noframenumbering,plain,allowframebreaks]{References}
     \printbibliography[heading=none]
 \end{frame}
 
