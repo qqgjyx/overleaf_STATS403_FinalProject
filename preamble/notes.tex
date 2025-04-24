@@ -1,0 +1,34 @@
+% !TEX root = ../digraph-main.tex
+% notes.tex
+
+% Drafted by Dimitris F. on September 09, 2020
+
+% \setbeameroption{show notes}
+
+% customize note page
+% [https://blog.hartwork.org/posts/customizing-latex-beamer-note-pages/]
+\newlength{\parskipbackup}
+\setlength{\parskipbackup}{\parskip}
+\newlength{\parindentbackup}
+\setlength{\parindentbackup}{\parindent}
+
+\let\notebackup\note
+\renewcommand{\note}[1]{\notebackup{%
+  \mode<handout>{\addtocounter{page}{-1}}%
+  \setlength{\parindent}{0ex}%
+  \setlength{\parskip}{2pt}%
+  \noindent%
+  {\scriptsize
+    \begin{spacing}{1.0}
+      #1 
+    \end{spacing}
+  }%
+  \setlength{\parskip}{\parskipbackup}%
+  \setlength{\parindent}{\parindentbackup}%
+}%
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../fast-graphlets-slides"
+%%% End:

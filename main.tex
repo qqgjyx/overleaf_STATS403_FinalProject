@@ -1,0 +1,84 @@
+%
+%  MAIN driver/organizer for slide presentation
+%
+
+\documentclass[aspectratio=169]{beamer}
+
+%%
+\makeatletter
+\defbeameroption{show only notes}[]% 
+{
+\beamer@notestrue
+\beamer@notesnormalsfalse
+}
+\makeatother
+
+\setbeameroption{hide notes}
+
+%%  ... include packages
+
+\input{preamble/packages}
+
+\input{preamble/customization}
+
+\input{preamble/graphics}
+
+\input{preamble/extras}
+
+%% ============ set up the title slide and footer information
+
+\input{sections/title}
+
+% ========== bibliography
+\bibliography{HSI.bib}
+
+\begin{document}
+
+
+\frame{\titlepage}                     % the very first slide frame 
+
+% \begin{frame}[noframenumbering,plain]
+%   \frametitle{Outline}
+%   \tableofcontents
+% \end{frame}
+
+%%  ---------- Outline 
+% \part{Part I}
+
+
+
+
+
+%% ----------- Problems
+
+%% ----------- Methods
+
+
+%% ----------- Results
+
+
+%% ----------- Discussion
+
+
+%% -----------  Acknowledgement
+
+\section*{Acknowledgement}
+\input{sections/acknowledgement}
+
+
+%% ============ BIBLIOGRAPHY
+\section*{Bibliography}
+\appendix
+
+\begin{frame}[noframenumbering,plain,allowframebreaks]{Bibliography}
+    \printbibliography[heading=none]
+\end{frame}
+
+
+\end{document}
+
+
+%%%%
+
+%%%%  provided by Xiaobai Sun 
+%%%%

@@ -1,0 +1,289 @@
+% !TEX root = ../digraph-main.tex
+% customization.tex
+
+
+\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+\definecolor{dukeblue}{RGB}{0, 83, 155}
+\definecolor{navyblue}{RGB}{1, 33, 105}
+
+\setbeamercolor{frametitle}{bg=navyblue, fg=white}
+% \setbeamertemplate{section in toc}[sections numbered]
+% \setbeamertemplate{subsection in toc}[subsections numbered]
+% \useoutertheme[subsection=false]{miniframes}
+% \setbeamercolor{section in head/foot}{fg=white, bg=dukeblue}
+% \setbeamerfont{section in head/foot}{series=\bfseries}
+
+% \makeatletter
+% \setbeamertemplate{frametitle}{%
+%   \nointerlineskip%
+%   \begin{beamercolorbox}[%
+%       wd=\paperwidth,%
+%       sep=0pt,%
+%       leftskip=\metropolis@frametitle@padding,%
+%       rightskip=\metropolis@frametitle@padding,%
+%       ht=2.25ex,%%%%%% NEW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%       dp=1.1ex, %%%%%% NEW !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%     ]{frametitle}%
+%   \metropolis@frametitlestrut@start%
+%   \insertframetitle%
+%   \nolinebreak%
+%   \metropolis@frametitlestrut@end%
+%   \end{beamercolorbox}%
+% }
+% \makeatother
+
+% get rid of navigation symbols
+\setbeamertemplate{navigation symbols}{}
+
+% remove shadow from title block
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+
+% use square-type bullets
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}{--}
+\setbeamertemplate{enumerate item}[circle]
+
+% use circles for ToC items and correct the weird size issue with "Madrid" theme
+\setbeamertemplate{sections/subsections in toc}[circle]
+\setbeamerfont{section number projected}{size=\normalsize}
+
+% figure captions: no "figure" prefix, small text, small figure-caption space
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[table]{labelformat=empty}
+\captionsetup[figure]{font=tiny,labelfont=tiny}
+\captionsetup[subfigure]{font=tiny,labelfont=tiny}
+
+% command for fixing inline TikZ nodes' vertical alignment
+\newcommand{\tikzbasefix}{-\the\dimexpr\fontdimen22\textfont2\relax}
+
+% define coloured clickable links
+\hypersetup{%
+  pdffitwindow=false,%
+  pdfstartview={FitH},%
+  % colorlinks,%
+  pdfauthor={},%
+  pdftitle={},%
+  pagebackref=true,%
+  citecolor=PaleGreen4,%
+  filecolor=DarkOrchid4,%
+  % linkcolor=OrangeRed4,%
+  urlcolor=RoyalBlue4%
+}
+
+% define the includegraphics search path
+\graphicspath{%
+  {./figures/}%
+}
+
+% short-hand command for hyperlinked e-mails
+\newcommand{\email}[1]{\href{mailto:#1}{\texttt{#1}}}
+
+% customize TikZ matrix column separator character (to avoid Beamer
+% conflict)
+\tikzset{ampersand replacement=\&}
+
+% redefine \boxed command to allow setting the border color
+\newcommand{\highlight}[1]{\fcolorbox{complclr1}{white}{$\displaystyle #1$}}
+
+% remove extra spacing around \left and \right delimiters
+\let\leftorig\left
+\let\rightorig\right
+\renewcommand{\left}{\mathopen{}\mathclose\bgroup\leftorig}
+\renewcommand{\right}{\aftergroup\egroup\rightorig}
+
+% increase vertical spacing between table rows
+\renewcommand{\arraystretch}{1.2}
+
+% modified bullet-point for highlighting
+\newcommand{\bulletemph}{$\large\boldsymbol{\star}$}
+
+% superscript comma for footnote references
+\newcommand{\footcomma}{\textsuperscript{,}}
+
+% command to output names under images
+\newcommand{\imentry}[3][1.25cm]{%
+  \vbox{\halign{\hfil##\hfil\cr%
+      \includegraphics[height=#1]{#2}\cr#3\cr}}}
+
+% pictures goes with authors
+\newcommand{\theauthor}[2]{\vbox{\halign{\hfil##\hfil\cr
+  \includegraphics[width=0.125\textwidth]{#1}\cr#2\cr}}}
+
+\newcommand{\theauthornopic}[1]{\vbox{\halign{\hfil##\hfil\cr
+  \cr#1\cr}}}
+
+\DeclareCaptionFont{tiny}{\tiny}
+
+\newcommand{\backupbegin}{
+   \newcounter{finalframe}
+   \setcounter{finalframe}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \setcounter{framenumber}{\value{finalframe}}
+}
+
+\setbeamerfont{footnote}{size=\tiny}
+
+% timeline option
+\newlength\yearposx
+
+% fix bug in beamer
+% [https://tex.stackexchange.com/a/426090]
+\makeatletter
+\let\@@magyar@captionfix\relax
+\makeatother
+
+% alternative footnote by Tiancheng Liu
+\newcommand\alternativefootnote[1]{%
+ \tikz[remember picture,overlay]
+ \draw (current page.south west) +(1in + \oddsidemargin,1em)
+ node[anchor=south west,inner sep=0pt]{\parbox{\textwidth}{%
+     \rlap{\rule{10em}{0.4pt}}\raggedright\tiny#1}};}
+
+
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip1em
+    \hbox{}\nobreak\hfill #1%
+    \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+{\savebox\mybox{#1}\begin{quote}\hspace*{-.7ex}}
+  {\unskip\vspace*{1mm}\signed{\usebox\mybox}\end{quote}}
+
+
+% define new table columns for fixed-width center columns
+% 
+% [https://tex.stackexchange.com/a/12712]
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% change how sections and subsection are highlight in TOC
+\setbeamertemplate{section in toc}{
+  \textbf{\inserttocsectionnumber.~\inserttocsection}}
+\setbeamertemplate{section in toc shaded}{
+  \inserttocsectionnumber.~\inserttocsection}
+
+\setbeamertemplate{subsection in toc}{
+  \hspace{1.2em}{\rule[0.3ex]{3pt}{3pt}}~\textbf{\inserttocsubsection}\par}
+\setbeamertemplate{subsection in toc shaded}{
+  \hspace{1.2em}{\rule[0.3ex]{3pt}{3pt}}~\inserttocsubsection\par}
+
+% clever ref
+\crefname{equation}{}{}
+\Crefname{equation}{}{}
+
+% extra rule for adding image with raggedright centered caption
+\newcommand{\lcaption}[2]{ %
+  % 
+  \captionsetup{justification=raggedright}
+  % 
+  \begin{minipage}{#1}
+    \caption{ %
+      #2
+    }
+  \end{minipage}
+}
+
+\DeclareSIUnit{\nothing}{\relax}
+
+\newcommand*{\textcal}[1]{%
+  % family qzc: Font TeX Gyre Chorus (package tgchorus)
+  % family pzc: Font Zapf Chancery (package chancery)
+  \textbf{\textit{\fontfamily{qzc}\selectfont#1}}% 
+}
+
+\DeclareMathAlphabet{\zcal}{\encodingdefault}{sqzc}{m}{it}
+
+
+\addtobeamertemplate{frametitle}{}{\vspace*{-0.5em}}
+
+
+\newcommand{\gls}{G$\ell$S}
+
+\newcommand{\conf}{\Omega}
+
+\newcommand{\ha}{h_{\rm a}}
+\newcommand{\hr}{h_{\rm r}}
+\newcommand{\dm}{{{\em d.m.}}}
+
+\newcommand{\bluered}{br}
+
+\setbeamercolor{block body}{bg=dukeblue!30}
+\setbeamercolor{block title}{bg=dukeblue,fg=black!2}
+
+
+% theorem and collorary
+\setbeamertemplate{theorems}[numbered] 
+
+\makeatletter
+\g@addto@macro\normalsize{%
+    \setlength\abovedisplayskip{2pt}
+}
+\g@addto@macro\normalsize{%
+    \setlength\belowdisplayskip{2pt}
+}
+
+\newcommand{\smsp}{\mspace{2mu}}  % slightly smaller space than \,
+\DeclareMathOperator*{\argmax}{arg \smsp max}
+\DeclareMathOperator*{\argmin}{arg \smsp min}
+
+\newtheorem{proposition}{Proposition}
+
+
+\def\arrowtext#1#2{\hbox to#1{\arrowtextA\ #2 \arrowtextA\kern2pt\llap{$\succ$}}}
+\def\arrowtextA{\leaders\vrule height2.7pt depth-2.3pt\hfil}
+
+\newcommand{\tikzvrule}[1]{
+  \draw   ([yshift=-0.8cm,xshift=#1]current page.north west)
+       -- ([xshift=#1]current page.south west)
+}
+
+\newcommand{\tikzvsubrule}[3]{
+  \draw   ([yshift=-0.8cm+#2,xshift=#1]current page.north west)
+       -- ([yshift=-0.8cm+#3,xshift=#1]current page.north west)
+}
+
+\newcommand{\tikzhrule}[1]{
+  \draw   ([yshift=-0.8cm+#1]current page.north west)
+       -- ([yshift=-0.8cm+#1]current page.north east)
+}
+
+\newcommand{\tikzhsubrule}[3]{
+  \draw   ([yshift=-0.8cm+#1,xshift=#2]current page.north west)
+       -- ([yshift=-0.8cm+#1,xshift=#3]current page.north east)
+}
+
+
+% footnote size & enable footnotes
+% \renewcommand{\footnotesize}{\fontsize{5pt}{8pt}\selectfont}
+% \let\oldfootnote\footnote
+% \renewcommand\footnote[1][]{\oldfootnote[frame,#1]}
+
+\renewcommand*{\bibfont}{\tiny}
+
+% \AtEveryCitekey{
+% %   \clearfield{location}
+%   \clearfield{title}
+%   \clearfield{number}
+%   \clearfield{volume}
+% %   \clearfield{publisher}
+% }
+
+\renewbibmacro*{cite}{%
+  \iffieldundef{shorthand}
+    {\ifthenelse{\ifnameundef{labelname}\OR\iffieldundef{labelyear}}
+       {\usebibmacro{cite:label}%
+        \setunit{\printdelim{nonameyeardelim}}}
+       {\printnames{labelname}%
+        \setunit{\printdelim{nameyeardelim}}}%
+     \usebibmacro{cite:labeldate+extradate}%
+     \setunit{\addcomma\space}%
+     \usebibmacro{journal}}
+   {\usebibmacro{cite:shorthand}}}
+
+\setbeamertemplate{bibliography item}{}
+
+%\makeatletter
+%\newcommand{\xleftrightarrow}[2][]{\ext@arrow 3359\leftrightarrowfill@{#1}{#2}}
+%\makeatother
+
+

@@ -1,0 +1,86 @@
+% !TEX root = ../digraph-main.tex
+% packages.tex
+
+% ----------------------------- Beamer Theme -----------------------------
+\usetheme{Madrid}
+\usepackage{appendixnumberbeamer}
+\usefonttheme[onlymath]{serif}
+
+% ----------------------------- Mathematics ------------------------------
+\usepackage{amsmath}      % Advanced math formatting
+\usepackage{amssymb}      % Additional math symbols
+\usepackage{amsthm}       % Theorems and definitions
+\usepackage{mathtools}    % Extensions to amsmath
+\usepackage{bm}           % Bold math symbols
+\usepackage{siunitx}      % SI units
+
+% ----------------------------- Graphics ---------------------------------
+\usepackage{graphicx}     % Include graphics
+\usepackage{adjustbox}    % Adjust boxes, e.g., for resizing
+\usepackage{tikz}         % Advanced graphics and drawing
+\usetikzlibrary{
+    arrows.meta,          % Arrow tips
+    decorations.text,     % Text decorations
+    automata, positioning, % Automata
+    backgrounds,          % Background layers
+    tikzmark,             % Markers for tikz
+    calc                 % Calculations in tikz
+}
+\usepackage{animate}
+\usepackage{media9}
+
+% ----------------------------- Tables -----------------------------------
+\usepackage{booktabs}     % Improved table formatting
+\usepackage{multirow}     % Multirow cells
+\usepackage{colortbl}     % Colored tables
+\usepackage{tabularx}     % Tabular with flexible column widths
+\usepackage{threeparttable} % Notes in tables
+\usepackage{pdflscape}    % Landscape pages
+\usepackage{float}
+
+% ----------------------------- Algorithms ------------------------------
+\usepackage[noend]{algorithm2e} % Algorithms with no end keywords
+\usepackage{algorithm}         % Algorithm package
+
+% ----------------------------- Captions ---------------------------------
+\usepackage[compatibility=false,
+            justification=raggedright,
+            font=scriptsize,
+            singlelinecheck=true]{caption}
+\usepackage[labelformat=empty,
+            justification=raggedright]{subcaption}
+
+% ----------------------------- Fonts ------------------------------------
+\usepackage[T1]{fontenc}  % Font encoding
+\usepackage[utf8]{inputenc} % UTF-8 input encoding
+\usepackage{textcomp}     % Additional text symbols
+
+% ----------------------------- Lists ------------------------------------
+\usepackage{enumerate}    % Enhanced enumerate environment
+
+% ----------------------------- References ------------------------------
+\usepackage{cleveref}     % Smart cross-referencing
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+
+% ----------------------------- Bibliography ----------------------------
+\usepackage[hyperref=true,
+            url=false,
+            isbn=false,
+            backref=false,
+            doi=false,
+            style=authoryear,
+            firstinits=true,
+            citereset=section,
+            maxcitenames=1,
+            maxbibnames=100,
+            backend=bibtex,
+            block=none]{biblatex}
+
+% ----------------------------- Colors -----------------------------------
+\usepackage{xcolor}       % Define and manage colors
+
+% ----------------------------- Miscellaneous ---------------------------
+\usepackage{hyperref}     % Hyperlinks in the document
+\usepackage{tcolorbox}    % Colored boxes for emphasis
+\usepackage{rotating}     % Rotating figures and tables
