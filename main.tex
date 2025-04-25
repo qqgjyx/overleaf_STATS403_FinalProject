@@ -27,6 +27,7 @@
 \frame{\titlepage}% the very first slide frame 
 
 %%  ---------- Overview
+%% ---frame 2
 \begin{frame}
 \frametitle{``Vision Transformers Need Registers'': Overview}
 
@@ -55,83 +56,621 @@
     \end{itemize}
 \end{itemize}
 \end{frame}
+%% ------------
 
 %% ----------- Problems
 \begin{section}{Problems}
-%% ---frame 2
+
+\begin{subsection}{Motivation}
+
+%% ---frame 3
 \begin{frame}
-\frametitle{Motivation: Why Register Tokens?}
+\frametitle{Motivation}
+\vspace{4.2em}
+Big picture:
+
+$$
+\boxed{\text{Embedding images into generic features that can serve multiple purposes in CV}}
+$$
+
+\vspace{6.48em}
+Earlier, e.g. SIFT by \cite{loweDistinctiveImageFeatures2004}.
+
+Today, ``Labels are expensive'': Pretrain $\rightarrow$ extract features.
+\end{frame}
+%% ------------
+
+%% ---frame 4
+\begin{frame}
+\frametitle{Motivation (cont.)}
+To bring us on the same page:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/attn6.png}
+    \caption{Self-attention from a ViT trained with no supervision~(\cite{caronEmergingPropertiesSelfsupervised2021}).}
+    \label{fig:attn6}
+\end{figure}
+\vspace{-1em}
+\begin{itemize}
+    \item Object segmentations from the self-attention\footnote{Self-attention of the \texttt{[CLS]} query produced by the last attention layer (\textbf{attention map}).}.
+\end{itemize}
+
+\end{frame}
+%% ------------
+
+%% ---frame 5
+\begin{frame}
+\frametitle{Motivation (cont.)}
+\vspace{4.2em}
+The paper's motivation:
+
+$$
+\boxed{\text{\emph{Observed: } In \underline{LOST}, DINOv2 \emph{worse} than DINO. } \quad \text{Analyze, fix these ViTs.}}
+$$
 
 \vspace{4.2em}
+\underline{LOST\footnote{\cite{simeoniLocalizingObjectsSelfsupervised2021}, \textit{BMVC}; Seed points $\rightarrow$ full object regions.}}:
+DINO features for Obj. detection\footnote{Not using attention maps (DINO-seg), but patch features.}.\quad $\rightarrow$ \quad $\boxed{\text{A clean attention map?}}$.
+\end{frame}
+%% ------------
+
+%% ---frame 6
+\begin{frame}
+\frametitle{Motivation (cont.)}
+\vspace{0.5em}
+\begin{figure}[h]
+    \centering
+    {\footnotesize
+    \setlength{\tabcolsep}{2.5pt} %
+    \renewcommand{\arraystretch}{0.4} %
+    \begin{tabular}{c cc cc cc }
+      \vspace{0.2em}
+      Input & DeiT-III-B & DeiT-III-L & OCLIP-B & OCLIP-L & DINO-B & DINOv2-g \\
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/109_orig.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_base_patch16_224.fb_in22k_ft_in1k_109_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_large_patch16_224.fb_in22k_ft_in1k_109_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_clip_224.laion2b_109_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_large_patch14_clip_224.laion2b_109_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_224.dino_109_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_giant_patch14_dinov2.lvd142m_109_lastattmap.png}
+      \\
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/1500_orig.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_base_patch16_224.fb_in22k_ft_in1k_1500_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_large_patch16_224.fb_in22k_ft_in1k_1500_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_clip_224.laion2b_1500_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_large_patch14_clip_224.laion2b_1500_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_224.dino_1500_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_giant_patch14_dinov2.lvd142m_1500_lastattmap.png}
+      \\
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/85_orig.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_base_patch16_224.fb_in22k_ft_in1k_85_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_large_patch16_224.fb_in22k_ft_in1k_85_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_clip_224.laion2b_85_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_large_patch14_clip_224.laion2b_85_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_224.dino_85_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_giant_patch14_dinov2.lvd142m_85_lastattmap.png}
+      \\
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/1753_orig.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_base_patch16_224.fb_in22k_ft_in1k_1753_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/deit3_large_patch16_224.fb_in22k_ft_in1k_1753_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_clip_224.laion2b_1753_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_large_patch14_clip_224.laion2b_1753_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_base_patch16_224.dino_1753_lastattmap.png} &
+      \includegraphics[width=0.10\textwidth]{resources/230914_1202_fig2_vizs_various_models/vit_giant_patch14_dinov2.lvd142m_1753_lastattmap.png}
+      \\
+    \end{tabular}
+    }
+    \vspace{-0.6em}
+    \caption{
+    %   We consider ViTs trained with label supervision (DeiT-III), text-supervision (OpenCLIP) or self-supervision (DINO and DINOv2).
+      \emph{All models but DINO} exhibit $\boxed{\text{peaky outlier values}}$ in the attention maps~(\cite{darcetVisionTransformersNeed2024}).
+    }  
+    \label{fig:allvits}
+\end{figure}
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\begin{subsection}{Analysis}
+
+%% ---frame 7
+\begin{frame}
+\frametitle{Analysis}
+
+$$\boxed{\text{Artifacts are high-norm outlier tokens}}$$
+
+\vspace{2em}
+\begin{figure}[t]
+    \includegraphics{resources/figure_3_1.pdf} 
+    \includegraphics{resources/figure_3_2.pdf} 
+    \includegraphics{resources/figure_3_3.pdf} 
+    \includegraphics{resources/figure_3_4.pdf} 
+    \caption{
+      Comparison of local feature norms~(\cite{darcetVisionTransformersNeed2024})\footnote{150 is the threshold used for artifacts in the paper if not otherwise specified.}
+    }  
+    \label{fig:norms_hist}
+\end{figure}
+\end{frame}
+%% ------------
+
+%% ---frame 8
+\begin{frame}
+\frametitle{Analysis (cont.)}
+\vspace{1em}
+
 $$
-\boxed{\textbf{Embedding images into generic features that can serve multiple purposes in CV}}
+\boxed{\text{Outliers appear during the training of large models}}
 $$
-\vspace{4.2em}
-\cite{loweDistinctiveImageFeatures2004}, Distinctive Image Features from Scale-Invariant Keypoints
+
+\vspace{1em}
+\begin{figure}[t]
+    \centering
+    \subcaptionbox{(a) Norms along layers.\label{fig:norm_hist_by_layer}}{
+      \includegraphics[width=0.31\linewidth]{resources/230802_norm_histogram_by_layer.png}
+      \vspace{-1em}
+    }
+    \subcaptionbox{(b) Norms along iterations.\label{fig:norm_hist_by_iter}}{
+      \includegraphics[width=0.31\linewidth]{resources/norm_distrib_vs_pretrain_iter.png}
+      \vspace{-1em}
+    }
+    \subcaptionbox{(c) Norms across model size.\label{fig:norm_hist_by_model}}{
+      \includegraphics[width=0.31\linewidth]{resources/norm_distrib_vs_model_size.png}
+      \vspace{-1em}
+    }
+    \vspace{-0.648em}
+    \caption{
+        Illustration of several properties of outlier tokens~(\cite{darcetVisionTransformersNeed2024})\footnote{40-layer DINOv2 ViT-g model.}.
+    }
+    \label{fig:factors_choice}
+\end{figure}
+\end{frame}
+%% ------------
+
+%% ---frame 9
+\begin{frame}
+\frametitle{Analysis (cont.)}
+\vspace{1em}
+
+$$
+\boxed{\text{High-norm tokens appear where patch information is redundant (Fig.~\ref{fig:outlier_cos_sims})}}
+$$
+
+\vspace{1em}
+\begin{figure}[t]
+    \centering
+    \subcaptionbox{(a) Cosine similarity to neighbors.\label{fig:outlier_cos_sims}}{
+      \includegraphics[width=0.3\linewidth]{resources/230802_kde_cossim_neighbors_2.png}
+    }
+    \hfill
+    \subcaptionbox{(b) Linear probing for local information.\label{tab:logreg_weird_patches_local}}{
+      \begin{tabular}{@{} l c cc c c @{}}
+        \toprule
+                && \multicolumn{2}{c}{position prediction} && reconstruction\\
+        \cmidrule{3-4} \cmidrule{6-6}
+                && top-1 acc      & avg. distance $\downarrow$ && L2 error $\downarrow$\\
+        \midrule
+        normal  && \textbf{41.7}  & \textbf{0.79} && \textbf{18.38} \\
+        outlier && 22.8           & 5.09          && 25.23 \\
+        \bottomrule
+      \end{tabular}
+    }
+    \caption{
+      (a): Distribution of cosine similarity between input patches and their 4 neighbors.
+      (b): Local information probing on normal and outlier patch tokens~(\cite{darcetVisionTransformersNeed2024}).
+    }
+\end{figure}
+\end{frame}
+%% ------------
+
+%% ---frame 10
+\begin{frame}
+\frametitle{Analysis (cont.)}
+
+$$
+\boxed{\text{High-norm tokens hold little local information (Tab.~\ref{tab:logreg_weird_patches_local})}}
+$$
+
+$$
+\boxed{\text{Artifacts hold global information (Tab.~\ref{tab:logreg_weird_patches_image_classif})}}
+$$
+
+\begin{table}[t]
+    \centering
+    \caption{
+        Image classification via linear probing on normal and outlier patch tokens~(\cite{darcetVisionTransformersNeed2024})\footnote{Also report the accuracy of classifiers learnt on the class token.}.
+      }
+    \begin{tabular}{@{} l *{14}{c@{\hspace{4pt}}} @{}}
+      \toprule
+      & IN1k & P205 & Airc. & CF10 & CF100 & CUB & Cal101 & Cars & DTD & Flow. & Food & Pets & SUN & VOC \\
+      \midrule
+      \texttt{[\texttt{[CLS]}]} & \textbf{86.0} & \textbf{66.4} & \textbf{87.3} & \textbf{99.4} & \textbf{94.5} & \textbf{91.3} & \underline{96.9} & \textbf{91.5} & \textbf{85.2} & \textbf{99.7} & \textbf{94.7} & \textbf{96.9} & \textbf{78.6} & \underline{89.1} \\
+      normal & 65.8 & 53.1 & 17.1 & 97.1 & 81.3 & 18.6 & 73.2 & 10.8 & 63.1 & 59.5 & 74.2 & 47.8 & 37.7 & 70.8 \\
+      outlier & \underline{69.0} & \underline{55.1} & \underline{79.1} & \underline{99.3} & \underline{93.7} & \underline{84.9} & \textbf{97.6} & \underline{85.2} & \underline{84.9} & \underline{99.6} & \underline{93.5} & \underline{94.1} & \underline{78.5} & \textbf{89.7} \\
+      \bottomrule
+    \end{tabular}
+    \vspace{-1em}
+    \label{tab:logreg_weird_patches_image_classif}
+\end{table}
+
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\end{section}
+
+%% ----------- Methods
+\begin{section}{Method}
+
+\begin{subsection}{Hypothesis}
+
+%% ---frame 11
+\begin{frame}
+\frametitle{Hypothesis}
+In ViT
 \begin{itemize}
-    \item SIFT.
-\end{itemize}
-Today, it still matters - ``Labels are expensive''.
-\begin{itemize}
-    \item Pretrain $\rightarrow$ extract features $\rightarrow$ downstream tasks.
+    \item Large, long iterations $\rightarrow$ artifacts.
+    \item \emph{Artifacts are not inherently bad} \footnote{They often appear in low-information regions and their local role can be recovered by surrounding tokens.}.
+    \item However, LOST suffers \footnote{And other tasks that rely on \emph{clean local features}.}.
 \end{itemize}
 \end{frame}
 %% ------------
 
-%% ---frame 3
+%% ---frame 12
 \begin{frame}
-\frametitle{Motivation: Why Register Tokens? (cont.)}
+\frametitle{Hypothesis (cont.)}
+Inspired by \cite{bulatovRecurrentMemoryTransformer2022}, add \emph{registers} tokens\footnote{First proposed for remediate translation in NLP.}:
 
 $$
-\boxed{\textbf{Observed: } \text{In LOST, DINOv2 worse than DINOv1. } \quad \text{Analyze, fix these ViTs.}}
+\boxed{\text{Additional learnable input tokens, discarded in output.}}
 $$
 
 \vspace{1em}
-
-\cite{caronEmergingPropertiesSelfsupervised2021}, \textit{ICCV}, Emerging Properties of Self-Supervised Vision Transformers
-
-\vspace{1em}
-
-\begin{itemize}
-    \item Sensible object segmentations can be obtained from the self-attention of the CLS query produced by the last attention layer.
-\end{itemize}
-
-\vspace{1em}
-
-\cite{simeoniLocalizingObjectsSelfsupervised2021}, \textit{BMVC}, Localizing Objects with Self-Supervised Transformers and no Labels
-
-\vspace{1em}
-
-\begin{itemize}
-    \item \textbf{LOST (Localizing Objects with Self-Supervised Transformers and no Labels):}
-    \begin{itemize}
-        \item Uses DINO features for unsupervised object detection.
-        \item Relies on foreground objects being well-activated in feature maps.
-        \item Starts from seed points and expands to localize full object regions.
-    \end{itemize}
-\end{itemize}
-
+This should isolate the global context, preserving clean, local patch features.
 \end{frame}
+%% ------------
 
+\end{subsection}
+
+\begin{subsection}{Remediation}
+%% ---frame 13
 \begin{frame}
-\frametitle{Motivation: Why Register Tokens? (cont.)}
-
-\begin{itemize}
-    \item \textbf{Observation:} Replacing DINOv1 with DINOv2 in the \textsc{LOST} algorithm led to significantly worse performance.
-    \item \textbf{Issue:} While DINOv1 produced clean, foreground-focused maps, DINOv2 and other ViTs showed \textbf{anomalous activations} in uninformative background regions.
-    \item \textbf{Insight:} The problem is not DINOv2 being worse, but DINOv1 being exceptionally clean.
-    \item \textbf{Approach:} Authors systematically analyze the anomaly, identify high-norm "artifact" tokens, and propose a universal fix.
-\end{itemize}
+\frametitle{Remediation}
+\begin{figure}[t]
+    \centering
+    \includegraphics{resources/model.pdf} 
+    \caption{
+      Illustration of the proposed remediation and resulting model.~(\cite{darcetVisionTransformersNeed2024}).
+    }  
+    \vspace{-1em}
+    \label{fig:model}
+  \end{figure}
 \end{frame}
+%% ------------
+
+\end{subsection}
+
 \end{section}
 
-%% ----------- Methods
-
-
 %% ----------- Results
+\begin{section}{Experiments}
 
+%% ---frame 14
+\begin{frame}
+\frametitle{Experimental Setup}
+\vspace{2.3em}
+\begin{table}[h]
+    \centering
+    \caption{Summary of models used in this paper's experiments.}
+    \begin{tabular}{lllll}
+        \toprule
+        Method & Sup. & Dataset & Arch. & Paper \\
+        \midrule
+        DEIT-III \footnote{\url{https://github.com/facebookresearch/deit}} & Label & ImageNet-22k & ViT-B & \cite{touvronDeiTIIIRevenge2022} \\
+        OpenCLIP \footnote{\url{https://github.com/mlfoundations/open_clip}} & Text & Shutterstock & ViT-B/16 & \cite{ilharco_gabriel_2021_5143773} \\
+        DINOv2 \footnote{\url{https://github.com/facebookresearch/dinov2}} & Self & ImageNet-22k & ViT-L & \cite{oquabDINOv2LearningRobust2024} \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:methods}
+\end{table}
+\end{frame}
+%% ------------
+
+\begin{subsection}{Evaluation}
+
+%% ---frame 15
+\begin{frame}
+\frametitle{Evaluation}
+\vspace{2em}
+
+$$
+\boxed{\text{Register tokens effectively remove the norm outliers that were present previously.}}
+$$
+
+\vspace{2em}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{resources/fig_norm_distrib_before_after_stripplot-2.png}
+    \caption{
+      Effect of register tokens on the distribution of output norms~(\cite{darcetVisionTransformersNeed2024}).
+    }
+    \label{fig:norm_distrib_before_after}
+\end{figure}
+
+\end{frame}
+%% ------------
+
+%% ---frame 16
+\begin{frame}
+\frametitle{Evaluation (cont.)}
+
+Using registers not only \emph{does not degrade performance}, but even:
+
+$$
+\boxed{\text{improves performance by a slight margin in some cases (Tab.~\ref{tab:downstream})}}
+$$
+
+\end{frame}
+%% ------------
+
+    
+
+
+
+
+%% ---frame 17
+\begin{frame}
+\frametitle{Evaluation (cont.)}
+
+\begin{table}[h]
+    \centering
+    \caption{
+        Evaluation of downstream performance of the models that we trained, with and without registers.
+      }  
+    \subcaptionbox{(a) Linear evaluation with frozen features.\label{tab:linear}}{
+      \centering
+      \begin{tabular}{@{}l c ccc@{}}
+          \toprule
+                      & ImageNet & ADE20k  & NYUd \\
+                      & Top-1  & mIoU    & rmse $\downarrow$ \\
+          \midrule
+        DeiT-III      & 84.7   & 38.9   & 0.511    \\
+        DeiT-III+reg  & 84.7   & 39.1   & 0.512    \\
+        \midrule
+        OpenCLIP      & 78.2   & 26.6   & 0.702    \\
+        OpenCLIP+reg  & 78.1   & 26.7   & 0.661    \\
+        \midrule
+        DINOv2        & 84.3 & 46.6 & 0.378 \\
+        DINOv2+reg    & 84.8 & 47.9 & 0.366 \\
+          \bottomrule
+      \end{tabular}
+    }
+    \hspace{3em}
+    \subcaptionbox{(b) Zero-shot classification.\label{tab:zero-shot}}{
+      \begin{tabular}{@{}l c c@{}}
+          \toprule
+                      & ImageNet \\
+                      & Top-1  \\
+          \midrule
+        OpenCLIP      & 59.9    \\
+        OpenCLIP+reg  & 60.1    \\
+          \bottomrule
+      \end{tabular}
+    }
+    \label{tab:downstream}
+\end{table}
+
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\begin{subsection}{Ablation study}
+
+%% ---frame 18
+\begin{frame}
+\frametitle{Ablation study}
+
+To remove artifacts\footnote{Evaluated on three tasks (ImageNet, ADE-20k and NYUd)}::
+
+$$
+\boxed{\text{One register is sufficient, more leads to improved downstream performance. (Fig.~\ref{fig:scores_n_reg})}}
+$$
+
+\end{frame}
+%% ------------
+
+%% ---frame 19
+\begin{frame}
+\frametitle{Ablation study (cont.)}
+\begin{figure}[t]
+    \centering
+    \begin{tabular}{*{7}{>{\centering\arraybackslash}m{0.135\textwidth}@{}}}
+      Input & 0 \texttt{[reg]} & 1 \texttt{[reg]} & 2 \texttt{[reg]} & 4 \texttt{[reg]} & 8 \texttt{[reg]} & 16 \texttt{[reg]} \\
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/pyrrhus_orig.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_0reg.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_1reg.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_2reg.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_4reg.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_8reg.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230916_attmap_vs_n_reg/100cc_pyrrhus_16reg.png}
+    \end{tabular} \\
+    \vspace{0.3em}
+    \includegraphics{resources/ablation_n_reg.pdf}
+    \caption{
+      Ablation of the the number of register tokens used with a DINOv2 model~(\cite{darcetVisionTransformersNeed2024}).
+    }
+    \label{fig:scores_n_reg}
+\end{figure}
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\begin{subsection}{Other experiments}
+
+%% ---frame 20
+\begin{frame}
+\frametitle{Other experiments - Object discovery}
+
+$$
+\boxed{\text{Registers \emph{significantly} improve object discovery performance (Tab.~\ref{tab:lost})}}
+$$
+
+\begin{table}[t]
+    \centering
+    \begin{tabular}{@{}l c ccc@{}}
+        \toprule
+                    & VOC 2007 & VOC 2012  & COCO 20k \\
+        \midrule
+      DeiT-III      & 11.7 & 13.1 & 10.7 \\
+      DeiT-III+reg  & 27.1 & 32.7 & 25.1 \\
+      \midrule
+      OpenCLIP      & 38.8 & 44.3 & 31.0 \\
+      OpenCLIP+reg  & 37.1 & 42.0 & 27.9 \\
+      \midrule
+      DINOv2        & 35.3 & 40.2 & 26.9 \\
+      DINOv2+reg    & 55.4 & 60.0 & 42.0 \\
+        \bottomrule
+    \end{tabular}
+    \caption{
+      Unsupervised Object Discovery using LOST on models with and without registers~(\cite{darcetVisionTransformersNeed2024})\footnote{Performance measured using corloc.}.
+    %   We observe that adding register tokens makes all models significantly more viable for usage in object discovery.
+    }  
+    \label{tab:lost}
+\end{table}
+\end{frame}
+%% ------------
+
+%% ---frame 21
+\begin{frame}
+\frametitle{Other experiments - Qualitative evaluation}
+
+Similarly to slot attention~(\cite{locatelloObjectCentricLearningSlot2020})\footnote{This behaviour was never required from the model, and emerged naturally from training.}:
+
+$$
+\boxed{\text{Register tokens attend to different parts of the feature map.}}
+$$
+
+{\footnotesize
+(It's a pity that this behaviour is not explored further in the paper.)
+}
+
+\begin{figure}[t]
+    \begin{tabular}{cccccc}
+      Input & \texttt{[\texttt{[CLS]}]} & \texttt{[reg$_0$]} & \texttt{[reg$_6$]} & \texttt{[reg$_8$]} & \texttt{[reg$_{12}$]} \\
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug_attn_cls.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug_attn_reg_0.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug_attn_reg_6.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug_attn_reg_8.png} &
+      \includegraphics[width=0.13\textwidth]{resources/230913_fig_slot_attn/mug_attn_reg_12.png}
+      \\
+    \end{tabular}
+    \caption{
+      Comparison of the attention maps of the \texttt{[CLS]} and register tokens~(\cite{darcetVisionTransformersNeed2024}).
+    }
+    \label{fig:slot_attn}
+\end{figure}
+
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\end{section}
 
 %% ----------- Discussion
+\begin{section}{Discussion}
+
+\begin{subsection}{Conclusion}
+
+%% ---frame 22
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+    \item \emph{Artifacts}.
+    \item — likely due to iterations and larger model.
+    \item A possible interpretation: the model reuse low-info areas to store \emph{global context}.
+    \item \emph{Artifacts are not inherently bad}, but can hurt LOST\footnote{And other tasks that rely on clean feature maps}.
+    \item \emph{Register tokens} act as a decoupling mechanism.
+    \item Different register tokens seem to focus on \emph{different objects}.
+\end{itemize}
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\begin{subsection}{Further work}
+
+%% ---frame 23
+\begin{frame}
+\frametitle{Further work}
+
+\begin{itemize}
+    \item \emph{One more benchmark}. Object discovery
+    \begin{itemize}
+        \item \emph{Open Images, Object365}, WIDER FACE, DeepFashion2, KITTI, AIOD
+    \end{itemize}
+    \item \emph{Improve the model / one more benchmark}:
+\end{itemize}
+\begin{figure}[t]
+    \centering
+    \caption{
+        Preliminary results of our study.
+    }
+    \subcaptionbox{(a) Linear evaluation with frozen features.}{
+        \centering
+        \begin{tabular}{@{}l c@{}}
+            \toprule
+                            & Tiny ImageNet\footnote{\url{https://paperswithcode.com/dataset/tiny-imagenet}} \\
+                            & Top-1  \\
+            \midrule
+          DeiT-B/16-D       & 91.0   \\
+          DeiT-B/16-D+reg   & 90.8   \\
+        \end{tabular}
+      }
+    \subcaptionbox{(a) Zero-Shot Classification.}{
+        \begin{tabular}{@{}l c c@{}}
+            \toprule
+                                & ImageNet \\
+                                & Top-1  \\
+            \midrule
+          OC(ResNet50)          & 59.6    \\
+          OC(ResNet50)+reg      & 60.0    \\
+          OC(ViT-B/32)          & 63.2    \\
+          OC(ViT-B/32)+reg      & 61.4    \\
+            \bottomrule
+        \end{tabular}
+      }
+\end{figure}
+
+\end{frame}
+
+%% ---frame 24
+\begin{frame}
+\frametitle{Further work (cont.)}
+
+\begin{itemize}
+    \item Different registers may attend to different objects — test this more directly.
+    \begin{itemize}
+        \item CLEVR, COCO Panoptic, GQA
+    \end{itemize}
+    \item \emph{Move beyond ViT}. e.g. Sequence data, matrix data\footnote{\url{https://www.kaggle.com/competitions/stanford-rna-3d-folding}}
+    \item \emph{Move beyond ViT}. e.g. Configurations from Multi-Resolution Graph-based Clustering\footnote{\url{https://www.qqgjyx.com/mheatmap/}}
+    \begin{figure}[t]
+        \centering
+        \includegraphics[width=0.5\textwidth]{figures/cifar10_attnmap.png}
+    \end{figure}
+\end{itemize}
+\end{frame}
+%% ------------
+
+\end{subsection}
+
+\end{section}
 
 %% -----------  Acknowledgement
 
