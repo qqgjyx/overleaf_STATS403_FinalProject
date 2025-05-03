@@ -59,9 +59,9 @@
 %% ------------
 
 %% ----------- Problems
-\begin{section}{Problems}
+\section{Problems}
 
-\begin{subsection}{Motivation}
+\subsection{Motivation}
 
 %% ---frame 3
 \begin{frame}
@@ -73,10 +73,17 @@ $$
 \boxed{\text{Embedding images into generic features that can serve multiple purposes in CV}}
 $$
 
-\vspace{6.48em}
-Earlier, e.g. SIFT by \cite{loweDistinctiveImageFeatures2004}.
+\vspace{3.48em}
 
-Today, ``Labels are expensive'': Pretrain $\rightarrow$ extract features.
+\begin{itemize}
+        \item \textbf{Earlier, Handcrafted principles:} e.g., SIFT by Lowe 2004, IJCV.
+        \item \textbf{Today, ``Labels are expensive''}:\textbf{Pretrain $\rightarrow$ feature extractor}
+        \begin{itemize}
+            \item For tasks with abundant data, pretrain a model.
+            \item Use parts of the model as a feature extractor for downstream tasks.
+        \end{itemize}
+    \end{itemize}
+
 \end{frame}
 %% ------------
 
@@ -171,9 +178,9 @@ DINO features for Obj. detection\footnote{Not using attention maps (DINO-seg), b
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\begin{subsection}{Analysis}
+\subsection{Analysis}
 
 %% ---frame 7
 \begin{frame}
@@ -278,9 +285,10 @@ $$
 
 \begin{table}[t]
     \centering
-    \caption{
+    \caption{%
         Image classification via linear probing on normal and outlier patch tokens~(\cite{darcetVisionTransformersNeed2024})\footnote{Also report the accuracy of classifiers learnt on the class token.}.
       }
+    \vspace{-1em}
     \begin{tabular}{@{} l *{14}{c@{\hspace{4pt}}} @{}}
       \toprule
       & IN1k & P205 & Airc. & CF10 & CF100 & CUB & Cal101 & Cars & DTD & Flow. & Food & Pets & SUN & VOC \\
@@ -297,14 +305,14 @@ $$
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\end{section}
+%%%
 
 %% ----------- Methods
-\begin{section}{Method}
+\section{Method}
 
-\begin{subsection}{Hypothesis}
+\subsection{Hypothesis}
 
 %% ---frame 11
 \begin{frame}
@@ -332,9 +340,9 @@ This should isolate the global context, preserving clean, local patch features.
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\begin{subsection}{Remediation}
+\subsection{Remediation}
 %% ---frame 13
 \begin{frame}
 \frametitle{Remediation}
@@ -350,12 +358,12 @@ This should isolate the global context, preserving clean, local patch features.
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\end{section}
+%%%
 
 %% ----------- Results
-\begin{section}{Experiments}
+\section{Experiments}
 
 %% ---frame 14
 \begin{frame}
@@ -378,7 +386,7 @@ This should isolate the global context, preserving clean, local patch features.
 \end{frame}
 %% ------------
 
-\begin{subsection}{Evaluation}
+\subsection{Evaluation}
 
 %% ---frame 15
 \begin{frame}
@@ -465,9 +473,9 @@ $$
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\begin{subsection}{Ablation study}
+\subsection{Ablation study}
 
 %% ---frame 18
 \begin{frame}
@@ -507,9 +515,9 @@ $$
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\begin{subsection}{Other experiments}
+\subsection{Other experiments}
 
 %% ---frame 20
 \begin{frame}
@@ -578,14 +586,12 @@ $$
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\end{section}
+%%%
 
 %% ----------- Discussion
-\begin{section}{Discussion}
-
-\begin{subsection}{Conclusion}
+\section{Conclusion}
 
 %% ---frame 22
 \begin{frame}
@@ -601,16 +607,16 @@ $$
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\begin{subsection}{Further work}
+\section{Further work}
 
 %% ---frame 23
 \begin{frame}
 \frametitle{Further work}
 
 \begin{itemize}
-    \item \emph{One more benchmark}. Object discovery
+    \item \emph{One more benchmark}. Object discovery $[\text{TBD}]$
     \begin{itemize}
         \item \emph{Open Images, Object365}, WIDER FACE, DeepFashion2, KITTI, AIOD
     \end{itemize}
@@ -630,9 +636,11 @@ $$
             \midrule
           DeiT-B/16-D       & 91.0   \\
           DeiT-B/16-D+reg   & 90.8   \\
+            \bottomrule
+
         \end{tabular}
       }
-    \subcaptionbox{(a) Zero-Shot Classification.}{
+    \subcaptionbox{(b) Zero-Shot Classification.}{
         \begin{tabular}{@{}l c c@{}}
             \toprule
                                 & ImageNet \\
@@ -658,19 +666,20 @@ $$
     \begin{itemize}
         \item CLEVR, COCO Panoptic, GQA
     \end{itemize}
-    \item \emph{Move beyond ViT}. e.g. Sequence data, matrix data\footnote{\url{https://www.kaggle.com/competitions/stanford-rna-3d-folding}}
+    \item \emph{Move beyond ViT}. e.g. Sequence data, matrix data. Reached T10 on a recent Kaggle\footnote{\url{https://www.kaggle.com/competitions/stanford-rna-3d-folding}}
     \item \emph{Move beyond ViT}. e.g. Configurations from Multi-Resolution Graph-based Clustering\footnote{\url{https://www.qqgjyx.com/mheatmap/}}
-    \begin{figure}[t]
-        \centering
-        \includegraphics[width=0.5\textwidth]{figures/cifar10_attnmap.png}
-    \end{figure}
 \end{itemize}
+\vspace{-2em}
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\textwidth]{figures/cifar10_attnmap.png}
+\end{figure}
 \end{frame}
 %% ------------
 
-\end{subsection}
+%%
 
-\end{section}
+%%%
 
 %% -----------  Acknowledgement
 
