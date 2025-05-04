@@ -1,7 +1,7 @@
 ##
 SHELL := /bin/bash # Use bash syntax
 
-MAIN = main
+MAIN = neurips_2025
 # "make" target
 
 all: pdf
