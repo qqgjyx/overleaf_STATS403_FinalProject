@@ -1,3 +1,55 @@
+@article{avsecEffectiveGeneExpression2021,
+  title = {Effective Gene Expression Prediction from Sequence by Integrating Long-Range Interactions},
+  author = {Avsec, Žiga and Agarwal, Vikram and Visentin, Daniel and Ledsam, Joseph R. and Grabska-Barwinska, Agnieszka and Taylor, Kyle R. and Assael, Yannis and Jumper, John and Kohli, Pushmeet and Kelley, David R.},
+  date = {2021-10},
+  journaltitle = {Nature Methods},
+  shortjournal = {Nat Methods},
+  volume = {18},
+  number = {10},
+  pages = {1196--1203},
+  publisher = {Nature Publishing Group},
+  issn = {1548-7105},
+  doi = {10.1038/s41592-021-01252-x},
+  url = {https://www.nature.com/articles/s41592-021-01252-x},
+  urldate = {2025-05-05},
+  abstract = {How noncoding DNA determines gene expression in different cell types is a major unsolved problem, and critical downstream applications in human genetics depend on improved solutions. Here, we report substantially improved gene expression prediction accuracy from DNA sequences through the use of a deep learning architecture, called Enformer, that is able to integrate information from long-range interactions (up to 100\,kb away) in the genome. This improvement yielded more accurate variant effect predictions on gene expression for both natural genetic variants and saturation mutagenesis measured by massively parallel reporter assays. Furthermore, Enformer learned to predict enhancer–promoter interactions directly from the DNA sequence competitively with methods that take direct experimental data as input. We expect that these advances will enable more effective fine-mapping of human disease associations and provide a framework to interpret cis-regulatory evolution.},
+  langid = {english},
+  keywords = {Gene expression,Machine learning,Software,Transcriptomics}
+}
+
+@inproceedings{baevskiWav2vec20Framework2020a,
+  title = {Wav2vec 2.0: {{A}} Framework for Self-Supervised Learning of Speech Representations},
+  shorttitle = {Wav2vec 2.0},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Baevski, Alexei and Zhou, Yuhao and Mohamed, Abdelrahman and Auli, Michael},
+  date = {2020},
+  volume = {33},
+  pages = {12449--12460},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2020/hash/92d1e1eb1cd6f9fba3227870bb6d7f07-Abstract.html},
+  urldate = {2025-05-05},
+  abstract = {We show for the first time that learning powerful representations from speech audio alone followed by fine-tuning on transcribed speech can outperform the best semi-supervised methods while being conceptually simpler. wav2vec 2.0 masks the speech input in the latent space and solves a contrastive task defined over a quantization of the latent representations which are jointly learned. Experiments using all labeled data of Librispeech achieve 1.8/3.3 WER on the clean/other test sets. When lowering the amount of labeled data to one hour, wav2vec 2.0 outperforms the previous state of the art on the 100 hour subset while using 100 times less labeled data. Using just ten minutes of labeled data and pre-training on 53k hours of unlabeled data still achieves 4.8/8.2 WER. This demonstrates the feasibility of speech recognition with limited amounts of labeled data.},
+  file = {/Users/juntangwang/Zotero/storage/8YFFP39T/Baevski et al. - 2020 - wav2vec 2.0 A framework for self-supervised learning of speech representations.pdf}
+}
+
+@article{Bengio:2013ebe,
+  title = {Representation Learning: {{A}} Review and New Perspectives},
+  shorttitle = {Representation {{Learning}}},
+  author = {Bengio, Yoshua and Courville, Aaron and Vincent, Pascal},
+  date = {2013-08},
+  journaltitle = {IEEE Trans. Pattern Anal. Mach. Intell.},
+  shortjournal = {IEEE Trans. Pattern Anal. Machine Intell.},
+  volume = {35},
+  number = {8},
+  pages = {1798--1828},
+  issn = {0162-8828},
+  doi = {10.1109/TPAMI.2013.50},
+  url = {https://doi.org/10.1109/TPAMI.2013.50},
+  urldate = {2025-05-05},
+  abstract = {The success of machine learning algorithms generally depends on data representation, and we hypothesize that this is because different representations can entangle and hide more or less the different explanatory factors of variation behind the data. Although specific domain knowledge can be used to help design representations, learning with generic priors can also be used, and the quest for AI is motivating the design of more powerful representation-learning algorithms implementing such priors. This paper reviews recent work in the area of unsupervised feature learning and deep learning, covering advances in probabilistic models, autoencoders, manifold learning, and deep networks. This motivates longer term unanswered questions about the appropriate objectives for learning good representations, for computing representations (i.e., inference), and the geometrical connections between representation learning, density estimation, and manifold learning.},
+  file = {/Users/juntangwang/Zotero/storage/TAJ6HK7H/Bengio et al. - 2013 - Representation learning A review and new perspectives.pdf}
+}
+
 @online{bulatovRecurrentMemoryTransformer2022,
   title = {Recurrent Memory Transformer},
   author = {Bulatov, Aydar and Kuratov, Yuri and Burtsev, Mikhail S.},
@@ -12,6 +64,22 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning,notion},
   file = {/Users/juntangwang/Zotero/storage/VY7DVIHD/Bulatov et al. - 2022 - Recurrent memory transformer.pdf;/Users/juntangwang/Zotero/storage/VCYS8D55/2207.html}
+}
+
+@online{burtsevMemoryTransformer2021,
+  title = {Memory Transformer},
+  author = {Burtsev, Mikhail S. and Kuratov, Yuri and Peganov, Anton and Sapunov, Grigory V.},
+  date = {2021-02-16},
+  eprint = {2006.11527},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2006.11527},
+  url = {http://arxiv.org/abs/2006.11527},
+  urldate = {2025-05-05},
+  abstract = {Transformer-based models have achieved state-of-the-art results in many natural language processing tasks. The self-attention architecture allows transformer to combine information from all elements of a sequence into context-aware representations. However, information about the context is stored mostly in the same element-wise representations. This might limit the processing of properties related to the sequence as a whole more difficult. Adding trainable memory to selectively store local as well as global representations of a sequence is a promising direction to improve the Transformer model. Memory-augmented neural networks (MANNs) extend traditional neural architectures with general-purpose memory for representations. MANNs have demonstrated the capability to learn simple algorithms like Copy or Reverse and can be successfully trained via backpropagation on diverse tasks from question answering to language modeling outperforming RNNs and LSTMs of comparable complexity. In this work, we propose and study few extensions of the Transformer baseline (1) by adding memory tokens to store non-local representations, (2) creating memory bottleneck for the global information, (3) controlling memory update with dedicated layer. We evaluate these memory augmented Transformers and demonstrate that presence of memory positively correlates with the model performance for machine translation and language modelling tasks. Augmentation of pre-trained masked language model with memory tokens shows mixed results for tasks from GLUE benchmark. Visualization of attention patterns over the memory suggest that it improves the model's ability to process a global context.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computation and Language,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing},
+  file = {/Users/juntangwang/Zotero/storage/DTEDZZVJ/Burtsev et al. - 2021 - Memory transformer.pdf;/Users/juntangwang/Zotero/storage/3V9N68LE/2006.html}
 }
 
 @online{caronEmergingPropertiesSelfsupervised2021,
@@ -30,6 +98,19 @@
   file = {/Users/juntangwang/Zotero/storage/SWZ73RWH/Caron et al. - 2021 - Emerging properties in self-supervised vision transformers.pdf;/Users/juntangwang/Zotero/storage/7EIVQ2PW/2104.html}
 }
 
+@inproceedings{chenSimpleFrameworkContrastive2020,
+  title = {A Simple Framework for Contrastive Learning of Visual Representations},
+  booktitle = {Proceedings of the 37th {{International Conference}} on {{Machine Learning}}},
+  author = {Chen, Ting and Kornblith, Simon and Norouzi, Mohammad and Hinton, Geoffrey},
+  date = {2020-07-13},
+  series = {{{ICML}}'20},
+  volume = {119},
+  pages = {1597--1607},
+  publisher = {JMLR.org},
+  abstract = {This paper presents SimCLR: a simple framework for contrastive learning of visual representations. We simplify recently proposed contrastive self-supervised learning algorithms without requiring specialized architectures or a memory bank. In order to understand what enables the contrastive prediction tasks to learn useful representations, we systematically study the major components of our framework. We show that (1) composition of data augmentations plays a critical role in defining effective predictive tasks, (2) introducing a learnable nonlinear transformation between the representation and the contrastive loss substantially improves the quality of the learned representations, and (3) contrastive learning benefits from larger batch sizes and more training steps compared to supervised learning. By combining these findings, we are able to considerably outperform previous methods for self-supervised and semi-supervised learning on ImageNet. A linear classifier trained on self-supervised representations learned by Sim-CLR achieves 76.5\% top-1 accuracy, which is a 7\% relative improvement over previous state-of-the-art, matching the performance of a supervised ResNet-50. When fine-tuned on only 1\% of the labels, we achieve 85.8\% top-5 accuracy, outperforming AlexNet with 100× fewer labels.},
+  file = {/Users/juntangwang/Zotero/storage/MWNES53Q/Chen et al. - 2020 - A simple framework for contrastive learning of visual representations.pdf}
+}
+
 @inproceedings{darcetVisionTransformersNeed2023,
   title = {Vision Transformers Need Registers},
   author = {Darcet, Timothée and Oquab, Maxime and Mairal, Julien and Bojanowski, Piotr},
@@ -39,7 +120,7 @@
   abstract = {Transformers have recently emerged as a powerful tool for learning visual representations. In this paper, we identify and characterize artifacts in feature maps of both supervised and self-supervised ViT networks. The artifacts correspond to high-norm tokens appearing during inference primarily in low-informative background areas of images, that are repurposed for internal computations. We propose a simple yet effective solution based on providing additional tokens to the input sequence of the Vision Transformer to fill that role. We show that this solution fixes that problem entirely for both supervised and self-supervised models, sets a new state of the art for self-supervised visual models on dense visual prediction tasks, enables object discovery methods with larger models, and most importantly leads to smoother feature maps and attention maps for downstream visual processing.},
   eventtitle = {The {{Twelfth International Conference}} on {{Learning Representations}}},
   langid = {english},
-  keywords = {notion},
+  keywords = {⭐⭐⭐⭐⭐,notion},
   file = {/Users/juntangwang/Zotero/storage/I3Z6DDSM/Darcet et al. - 2023 - Vision transformers need registers.pdf}
 }
 
@@ -60,6 +141,132 @@
   file = {/Users/juntangwang/Zotero/storage/SBMI9JNR/Darcet et al. - 2024 - Vision transformers need registers.pdf;/Users/juntangwang/Zotero/storage/MDI6SXEC/2309.html}
 }
 
+@inproceedings{dengImageNetLargescaleHierarchical2009,
+  title = {{{ImageNet}}: {{A}} Large-Scale Hierarchical Image Database},
+  shorttitle = {{{ImageNet}}},
+  booktitle = {2009 {{IEEE Conference}} on {{Computer Vision}} and {{Pattern Recognition}}},
+  author = {Deng, Jia and Dong, Wei and Socher, Richard and Li, Li-Jia and Li, Kai and Fei-Fei, Li},
+  date = {2009-06},
+  pages = {248--255},
+  issn = {1063-6919},
+  doi = {10.1109/CVPR.2009.5206848},
+  url = {https://ieeexplore.ieee.org/document/5206848},
+  urldate = {2025-05-05},
+  abstract = {The explosion of image data on the Internet has the potential to foster more sophisticated and robust models and algorithms to index, retrieve, organize and interact with images and multimedia data. But exactly how such data can be harnessed and organized remains a critical problem. We introduce here a new database called “ImageNet”, a large-scale ontology of images built upon the backbone of the WordNet structure. ImageNet aims to populate the majority of the 80,000 synsets of WordNet with an average of 500–1000 clean and full resolution images. This will result in tens of millions of annotated images organized by the semantic hierarchy of WordNet. This paper offers a detailed analysis of ImageNet in its current state: 12 subtrees with 5247 synsets and 3.2 million images in total. We show that ImageNet is much larger in scale and diversity and much more accurate than the current image datasets. Constructing such a large-scale database is a challenging task. We describe the data collection scheme with Amazon Mechanical Turk. Lastly, we illustrate the usefulness of ImageNet through three simple applications in object recognition, image classification and automatic object clustering. We hope that the scale, accuracy, diversity and hierarchical structure of ImageNet can offer unparalleled opportunities to researchers in the computer vision community and beyond.},
+  eventtitle = {2009 {{IEEE Conference}} on {{Computer Vision}} and {{Pattern Recognition}}},
+  keywords = {Explosions,Image databases,Image retrieval,Information retrieval,Internet,Large-scale systems,Multimedia databases,Ontologies,Robustness,Spine},
+  file = {/Users/juntangwang/Zotero/storage/5WK8B47R/5206848.html;/Users/juntangwang/Zotero/storage/KJG95BQT/5206848.html}
+}
+
+@article{Devlin:2018mgb,
+  title = {{{BERT}}: {{Pre-training}} of Deep Bidirectional Transformers for Language Understanding},
+  shorttitle = {{{BERT}}},
+  author = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  date = {2019-05-24},
+  journaltitle = {arXiv:1810.04805 [cs.CL]},
+  eprint = {1810.04805},
+  eprinttype = {arXiv},
+  eprintclass = {cs.CL},
+  doi = {10.48550/arXiv.1810.04805},
+  url = {http://arxiv.org/abs/1810.04805},
+  urldate = {2025-05-05},
+  abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5\% (7.7\% point absolute improvement), MultiNLI accuracy to 86.7\% (4.6\% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
+  keywords = {Computer Science - Computation and Language},
+  file = {/Users/juntangwang/Zotero/storage/R86DRE9Y/Devlin et al. - 2019 - BERT Pre-training of deep bidirectional transformers for language understanding.pdf;/Users/juntangwang/Zotero/storage/Z5Y6VTV9/1810.html}
+}
+
+@inproceedings{devlinBERTPretrainingDeep2019,
+  title = {{{BERT}}: {{Pre-training}} of Deep Bidirectional Transformers for Language Understanding},
+  shorttitle = {{{BERT}}},
+  booktitle = {Proceedings of the 2019 {{Conference}} of the {{North American Chapter}} of the {{Association}} for {{Computational Linguistics}}: {{Human Language Technologies}}, {{Volume}} 1 ({{Long}} and {{Short Papers}})},
+  author = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  editor = {Burstein, Jill and Doran, Christy and Solorio, Thamar},
+  date = {2019-06},
+  pages = {4171--4186},
+  publisher = {Association for Computational Linguistics},
+  location = {Minneapolis, Minnesota},
+  doi = {10.18653/v1/N19-1423},
+  url = {https://aclanthology.org/N19-1423/},
+  urldate = {2025-05-05},
+  abstract = {We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers. Unlike recent language representation models (Peters et al., 2018a; Radford et al., 2018), BERT is designed to pre-train deep bidirectional representations from unlabeled text by jointly conditioning on both left and right context in all layers. As a result, the pre-trained BERT model can be fine-tuned with just one additional output layer to create state-of-the-art models for a wide range of tasks, such as question answering and language inference, without substantial task-specific architecture modifications. BERT is conceptually simple and empirically powerful. It obtains new state-of-the-art results on eleven natural language processing tasks, including pushing the GLUE score to 80.5 (7.7 point absolute improvement), MultiNLI accuracy to 86.7\% (4.6\% absolute improvement), SQuAD v1.1 question answering Test F1 to 93.2 (1.5 point absolute improvement) and SQuAD v2.0 Test F1 to 83.1 (5.1 point absolute improvement).},
+  eventtitle = {{{NAACL-HLT}} 2019},
+  file = {/Users/juntangwang/Zotero/storage/AP35V23C/Devlin et al. - 2019 - BERT Pre-training of deep bidirectional transformers for language understanding.pdf}
+}
+
+@online{gongASTAudioSpectrogram2021,
+  title = {{{AST}}: {{Audio}} Spectrogram Transformer},
+  shorttitle = {{{AST}}},
+  author = {Gong, Yuan and Chung, Yu-An and Glass, James},
+  date = {2021-07-08},
+  eprint = {2104.01778},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2104.01778},
+  url = {http://arxiv.org/abs/2104.01778},
+  urldate = {2025-05-05},
+  abstract = {In the past decade, convolutional neural networks (CNNs) have been widely adopted as the main building block for end-to-end audio classification models, which aim to learn a direct mapping from audio spectrograms to corresponding labels. To better capture long-range global context, a recent trend is to add a self-attention mechanism on top of the CNN, forming a CNN-attention hybrid model. However, it is unclear whether the reliance on a CNN is necessary, and if neural networks purely based on attention are sufficient to obtain good performance in audio classification. In this paper, we answer the question by introducing the Audio Spectrogram Transformer (AST), the first convolution-free, purely attention-based model for audio classification. We evaluate AST on various audio classification benchmarks, where it achieves new state-of-the-art results of 0.485 mAP on AudioSet, 95.6\% accuracy on ESC-50, and 98.1\% accuracy on Speech Commands V2.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Sound},
+  file = {/Users/juntangwang/Zotero/storage/TZ5EY7NI/Gong et al. - 2021 - AST Audio spectrogram transformer.pdf;/Users/juntangwang/Zotero/storage/PSP7P48R/2104.html}
+}
+
+@inproceedings{grillBootstrapYourOwn2020,
+  title = {Bootstrap Your Own Latent - a New Approach to Self-Supervised Learning},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Grill, Jean-Bastien and Strub, Florian and Altché, Florent and Tallec, Corentin and Richemond, Pierre and Buchatskaya, Elena and Doersch, Carl and Avila Pires, Bernardo and Guo, Zhaohan and Gheshlaghi Azar, Mohammad and Piot, Bilal and {kavukcuoglu}, koray and Munos, Remi and Valko, Michal},
+  date = {2020},
+  volume = {33},
+  pages = {21271--21284},
+  publisher = {Curran Associates, Inc.},
+  url = {https://papers.nips.cc/paper/2020/hash/f3ada80d5c4ee70142b17b8192b2958e-Abstract.html},
+  urldate = {2025-05-05},
+  abstract = {We introduce Bootstrap Your Own Latent (BYOL), a new approach to self-supervised image representation learning. BYOL relies on two neural networks, referred to as online and target networks, that interact and learn from each other. From an augmented view of an image, we train the online network to predict the target network representation of the same image under a different augmented view. At the same time, we update the target network with a slow-moving average of the online network. While state-of-the art methods intrinsically rely on negative pairs, BYOL achieves a new state of the art without them. BYOL reaches 74.3\% top-1 classification accuracy on ImageNet using the standard linear evaluation protocol with a standard ResNet-50 architecture and 79.6\% with a larger ResNet. We also show that BYOL performs on par or better than the current state of the art on both transfer and semi-supervised benchmarks.},
+  file = {/Users/juntangwang/Zotero/storage/HUD5MV67/Grill et al. - 2020 - Bootstrap your own latent - a new approach to self-supervised learning.pdf}
+}
+
+@inproceedings{heMaskedAutoencodersAre2022,
+  title = {Masked Autoencoders Are Scalable Vision Learners},
+  booktitle = {2022 {{IEEE}}/{{CVF Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})},
+  author = {He, Kaiming and Chen, Xinlei and Xie, Saining and Li, Yanghao and Dollar, Piotr and Girshick, Ross},
+  date = {2022-06},
+  pages = {15979--15988},
+  publisher = {IEEE},
+  location = {New Orleans, LA, USA},
+  doi = {10.1109/CVPR52688.2022.01553},
+  url = {https://ieeexplore.ieee.org/document/9879206/},
+  urldate = {2025-05-05},
+  abstract = {This paper shows that masked autoencoders (MAE) are scalable self-supervised learners for computer vision. Our MAE approach is simple: we mask random patches of the input image and reconstruct the missing pixels. It is based on two core designs. First, we develop an asymmetric encoder-decoder architecture, with an encoder that operates only on the visible subset of patches (without mask tokens), along with a lightweight decoder that reconstructs the original image from the latent representation and mask tokens. Second, we find that masking a high proportion of the input image, e.g., 75\%, yields a nontrivial and meaningful self-supervisory task. Coupling these two designs enables us to train large models efficiently and effectively: we accelerate training (by 3× or more) and improve accuracy. Our scalable approach allows for learning high-capacity models that generalize well: e.g., a vanilla ViT-Huge model achieves the best accuracy (87.8\%) among methods that use only ImageNet-1K data. Transfer performance in downstream tasks outperforms supervised pretraining and shows promising scaling behavior.},
+  eventtitle = {2022 {{IEEE}}/{{CVF Conference}} on {{Computer Vision}} and {{Pattern Recognition}} ({{CVPR}})},
+  isbn = {978-1-6654-6946-3},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/6ZNBUHZT/He et al. - 2022 - Masked autoencoders are scalable vision learners.pdf}
+}
+
+@article{heMomentumContrastUnsupervised,
+  title = {Momentum Contrast for Unsupervised Visual Representation Learning},
+  author = {He, Kaiming and Fan, Haoqi and Wu, Yuxin and Xie, Saining and Girshick, Ross},
+  abstract = {We present Momentum Contrast (MoCo) for unsupervised visual representation learning. From a perspective on contrastive learning [29] as dictionary look-up, we build a dynamic dictionary with a queue and a moving-averaged encoder. This enables building a large and consistent dictionary on-the-fly that facilitates contrastive unsupervised learning. MoCo provides competitive results under the common linear protocol on ImageNet classification. More importantly, the representations learned by MoCo transfer well to downstream tasks. MoCo can outperform its supervised pre-training counterpart in 7 detection/segmentation tasks on PASCAL VOC, COCO, and other datasets, sometimes surpassing it by large margins. This suggests that the gap between unsupervised and supervised representation learning has been largely closed in many vision tasks.},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/JIQJFAIX/He et al. - Momentum contrast for unsupervised visual representation learning.pdf}
+}
+
+@online{huangTabTransformerTabularData2020,
+  title = {{{TabTransformer}}: {{Tabular}} Data Modeling Using Contextual Embeddings},
+  shorttitle = {{{TabTransformer}}},
+  author = {Huang, Xin and Khetan, Ashish and Cvitkovic, Milan and Karnin, Zohar},
+  date = {2020-12-11},
+  eprint = {2012.06678},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2012.06678},
+  url = {http://arxiv.org/abs/2012.06678},
+  urldate = {2025-05-05},
+  abstract = {We propose TabTransformer, a novel deep tabular data modeling architecture for supervised and semi-supervised learning. The TabTransformer is built upon self-attention based Transformers. The Transformer layers transform the embeddings of categorical features into robust contextual embeddings to achieve higher prediction accuracy. Through extensive experiments on fifteen publicly available datasets, we show that the TabTransformer outperforms the state-of-the-art deep learning methods for tabular data by at least 1.0\% on mean AUC, and matches the performance of tree-based ensemble models. Furthermore, we demonstrate that the contextual embeddings learned from TabTransformer are highly robust against both missing and noisy data features, and provide better interpretability. Lastly, for the semi-supervised setting we develop an unsupervised pre-training procedure to learn data-driven contextual embeddings, resulting in an average 2.1\% AUC lift over the state-of-the-art methods.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/juntangwang/Zotero/storage/XRP3NIU8/Huang et al. - 2020 - TabTransformer Tabular data modeling using contextual embeddings.pdf;/Users/juntangwang/Zotero/storage/D4GSX7AP/2012.html}
+}
+
 @software{ilharco_gabriel_2021_5143773,
   title = {{{OpenCLIP}}},
   author = {Ilharco, Gabriel and Wortsman, Mitchell and Wightman, Ross and Gordon, Cade and Carlini, Nicholas and Taori, Rohan and Dave, Achal and Shankar, Vaishaal and Namkoong, Hongseok and Miller, John and Hajishirzi, Hannaneh and Farhadi, Ali and Schmidt, Ludwig},
@@ -69,6 +276,35 @@
   organization = {Zenodo},
   version = {0.1},
   keywords = {notion}
+}
+
+@inproceedings{jaeglePerceiverIOGeneral2021,
+  title = {Perceiver {{IO}}: {{A}} General Architecture for Structured Inputs \& Outputs},
+  shorttitle = {Perceiver {{IO}}},
+  author = {Jaegle, Andrew and Borgeaud, Sebastian and Alayrac, Jean-Baptiste and Doersch, Carl and Ionescu, Catalin and Ding, David and Koppula, Skanda and Zoran, Daniel and Brock, Andrew and Shelhamer, Evan and Henaff, Olivier J. and Botvinick, Matthew and Zisserman, Andrew and Vinyals, Oriol and Carreira, Joao},
+  date = {2021-10-06},
+  url = {https://openreview.net/forum?id=fILj7WpI-g},
+  urldate = {2025-05-05},
+  abstract = {A central goal of machine learning is the development of systems that can solve many problems in as many data domains as possible. Current architectures, however, cannot be applied beyond a small set of stereotyped settings, as they bake in domain \& task assumptions or scale poorly to large inputs or outputs. In this work, we propose Perceiver IO, a general-purpose architecture that handles data from arbitrary settings while scaling linearly with the size of inputs and outputs. Our model augments the Perceiver with a flexible querying mechanism that enables outputs of various sizes and semantics, doing away with the need for task-specific architecture engineering. The same architecture achieves strong results on tasks spanning natural language and visual understanding, multi-task and multi-modal reasoning, and StarCraft II. As highlights, Perceiver IO outperforms a Transformer-based BERT baseline on the GLUE language benchmark despite removing input tokenization and achieves state-of-the-art performance on Sintel optical flow estimation with no explicit mechanisms for multiscale correspondence.},
+  eventtitle = {International {{Conference}} on {{Learning Representations}}},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/ZUI9QXBG/Jaegle et al. - 2021 - Perceiver IO A general architecture for structured inputs & outputs.pdf}
+}
+
+@online{jangCategoricalReparameterizationGumbelsoftmax2017,
+  title = {Categorical Reparameterization with Gumbel-Softmax},
+  author = {Jang, Eric and Gu, Shixiang and Poole, Ben},
+  date = {2017-08-05},
+  eprint = {1611.01144},
+  eprinttype = {arXiv},
+  eprintclass = {stat},
+  doi = {10.48550/arXiv.1611.01144},
+  url = {http://arxiv.org/abs/1611.01144},
+  urldate = {2025-05-05},
+  abstract = {Categorical variables are a natural choice for representing discrete structure in the world. However, stochastic neural networks rarely use categorical latent variables due to the inability to backpropagate through samples. In this work, we present an efficient gradient estimator that replaces the non-differentiable sample from a categorical distribution with a differentiable sample from a novel Gumbel-Softmax distribution. This distribution has the essential property that it can be smoothly annealed into a categorical distribution. We show that our Gumbel-Softmax estimator outperforms state-of-the-art gradient estimators on structured output prediction and unsupervised generative modeling tasks with categorical latent variables, and enables large speedups on semi-supervised classification.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/juntangwang/Zotero/storage/RVJQIDF6/Jang et al. - 2017 - Categorical reparameterization with gumbel-softmax.pdf;/Users/juntangwang/Zotero/storage/Z7PRI5WR/1611.html}
 }
 
 @book{jolliffePrincipalComponentAnalysis1986,
@@ -83,6 +319,38 @@
   urldate = {2025-05-03},
   isbn = {978-1-4757-1906-2 978-1-4757-1904-8},
   keywords = {computation,computer,Eigenvalue,eigenvector,factor analysis,Finite,form,Matrix,principal component analysis,regression,regression analysis,set,Statistica,symmetric relation,variable}
+}
+
+@inproceedings{krizhevskyImageNetClassificationDeep2012,
+  title = {{{ImageNet}} Classification with Deep Convolutional Neural Networks},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+  date = {2012},
+  volume = {25},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper_files/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html},
+  urldate = {2025-05-05},
+  abstract = {We trained a large, deep convolutional neural network to classify the 1.3 million high-resolution images in the LSVRC-2010 ImageNet training set into the 1000 different classes. On the test data, we achieved top-1 and top-5 error rates of 39.7\textbackslash\% and 18.9\textbackslash\% which is considerably better than the previous state-of-the-art results. The neural network, which has 60 million parameters and 500,000 neurons, consists of five convolutional layers, some of which are followed by max-pooling layers, and two globally connected layers with a final 1000-way softmax. To make training faster, we used non-saturating neurons and a very efficient GPU implementation of convolutional nets. To reduce overfitting in the globally connected layers we employed a new regularization method that proved to be very effective.},
+  file = {/Users/juntangwang/Zotero/storage/SABTMB5T/Krizhevsky et al. - 2012 - ImageNet classification with deep convolutional neural networks.pdf}
+}
+
+@inproceedings{liuPatchDropoutEconomizingVision2023,
+  title = {{{PatchDropout}}: {{Economizing}} Vision Transformers Using Patch Dropout},
+  shorttitle = {{{PatchDropout}}},
+  booktitle = {2023 {{IEEE}}/{{CVF Winter Conference}} on {{Applications}} of {{Computer Vision}} ({{WACV}})},
+  author = {Liu, Yue and Matsoukas, Christos and Strand, Fredrik and Azizpour, Hossein and Smith, Kevin},
+  date = {2023-01},
+  pages = {3942--3951},
+  publisher = {IEEE},
+  location = {Waikoloa, HI, USA},
+  doi = {10.1109/WACV56688.2023.00394},
+  url = {https://ieeexplore.ieee.org/document/10030183/},
+  urldate = {2025-05-05},
+  abstract = {Vision transformers have demonstrated the potential to outperform CNNs in a variety of vision tasks. But the computational and memory requirements of these models prohibit their use in many applications, especially those that depend on high-resolution images, such as medical image classification. Efforts to train ViTs more efficiently are overly complicated, necessitating architectural changes or intricate training schemes. In this work, we show that standard ViT models can be efficiently trained at high resolution by randomly dropping input image patches. This simple approach, PatchDropout, reduces FLOPs and memory by at least 50\% in standard natural image datasets such as IMAGENET, and those savings only increase with image size. On CSAW, a high-resolution medical dataset, we observe a 5⇥ savings in computation and memory using PatchDropout, along with a boost in performance. For practitioners with a fixed computational or memory budget, PatchDropout makes it possible to choose image resolution, hyperparameters, or model size to get the most performance out of their model.},
+  eventtitle = {2023 {{IEEE}}/{{CVF Winter Conference}} on {{Applications}} of {{Computer Vision}} ({{WACV}})},
+  isbn = {978-1-6654-9346-8},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/KCVHWMF9/Liu et al. - 2023 - PatchDropout Economizing vision transformers using patch dropout.pdf}
 }
 
 @inproceedings{locatelloObjectCentricLearningSlot2020,
@@ -118,21 +386,6 @@
   file = {/Users/juntangwang/Zotero/storage/KLIX29VI/Lowe - 2004 - Distinctive image features from scale-invariant keypoints.pdf}
 }
 
-@article{maatenVisualizingDataUsing2008,
-  title = {Visualizing Data Using T-{{SNE}}},
-  author = {family=Maaten, given=Laurens, prefix=van der, useprefix=false and Hinton, Geoffrey},
-  date = {2008},
-  journaltitle = {Journal of Machine Learning Research},
-  volume = {9},
-  number = {86},
-  pages = {2579--2605},
-  issn = {1533-7928},
-  url = {http://jmlr.org/papers/v9/vandermaaten08a.html},
-  urldate = {2025-05-03},
-  abstract = {We present a new technique called "t-SNE" that visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map. The technique is a variation of Stochastic Neighbor Embedding (Hinton and Roweis, 2002) that is much easier to optimize, and produces significantly better visualizations by reducing the tendency to crowd points together in the center of the map. t-SNE is better than existing techniques at creating a single map that reveals structure at many different scales. This is particularly important for high-dimensional data that lie on several different, but related, low-dimensional manifolds, such as images ofobjects from multiple classes seen from multiple viewpoints. For visualizing the structure of very large data sets, we show how t-SNE can use random walks on neighborhood graphs to allow the implicit structure of all of the data to influence the way in which a subset of the data is displayed. We illustrate the performance of t-SNE on a wide variety of data sets and compare it with many other non-parametric visualization techniques, including Sammon mapping, Isomap, and Locally Linear Embedding. The visualizations produced by t-SNE are significantly better than those produced by the other techniques on almost all of the data sets.},
-  file = {/Users/juntangwang/Zotero/storage/W8YARMD3/Maaten and Hinton - 2008 - Visualizing data using t-SNE.pdf}
-}
-
 @online{oquabDINOv2LearningRobust2024,
   title = {{{DINOv2}}: {{Learning}} Robust Visual Features without Supervision},
   shorttitle = {{{DINOv2}}},
@@ -150,15 +403,61 @@
   file = {/Users/juntangwang/Zotero/storage/PDPKXRSY/Oquab et al. - 2024 - DINOv2 Learning robust visual features without supervision.pdf;/Users/juntangwang/Zotero/storage/6CCH9ZXR/2304.html}
 }
 
+@inproceedings{raoDynamicViTEfficientVision2021,
+  title = {{{DynamicViT}}: {{Efficient}} Vision Transformers with Dynamic Token Sparsification},
+  shorttitle = {{{DynamicViT}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Rao, Yongming and Zhao, Wenliang and Liu, Benlin and Lu, Jiwen and Zhou, Jie and Hsieh, Cho-Jui},
+  date = {2021},
+  volume = {34},
+  pages = {13937--13949},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2021/hash/747d3443e319a22747fbb873e8b2f9f2-Abstract.html},
+  urldate = {2025-05-05},
+  file = {/Users/juntangwang/Zotero/storage/FH2QAGGT/Rao et al. - 2021 - DynamicViT Efficient vision transformers with dynamic token sparsification.pdf}
+}
+
 @article{ReproducibilityStudyVision2025,
-  title = {Reproducibility {{Study}} of “{{Vision Transformers Need Registers}}”},
+  title = {Reproducibility Study of “Vision Transformers Need Registers”},
   date = {2025-02-26},
   journaltitle = {Transactions on Machine Learning Research},
   url = {https://openreview.net/forum?id=w9pgM58H05},
-  urldate = {2025-04-24},
+  urldate = {2025-05-05},
   abstract = {Vision Transformers (ViTs) have achieved State-Of-The-Art (SOTA) performance in nu- merous tasks. However, the emergence of high-norm artifact tokens in supervised and self-supervised ViTs hinders interpretability of attention maps of such models. This study reproduces and validates previous work (5) addressing this issue through the use of register tokens - learnable placeholders added to the input sequence - that mitigate artifacts and yield smoother feature maps. We evaluated the presence of artifacts in various ViT models, namely DeiT-III and DINOv2 architectures, and investigated the impact of fine-tuning pre- trained ViTs with register tokens and additional regularization introduced. By conducting experiments on pre-trained and fine-tuned models, we confirm that register tokens eliminate artifact and improve attention map interpretability.},
   langid = {english},
-  file = {/Users/juntangwang/Zotero/storage/KC5XX62W/2025 - Reproducibility Study of “Vision Transformers Need Registers”.pdf}
+  file = {/Users/juntangwang/Zotero/storage/52I5GWUZ/2025 - Reproducibility study of “vision transformers need registers”.pdf}
+}
+
+@inproceedings{ryooTokenLearnerAdaptiveSpacetime2021,
+  title = {{{TokenLearner}}: {{Adaptive}} Space-Time Tokenization for Videos},
+  shorttitle = {{{TokenLearner}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Ryoo, Michael and family=Piergiovanni, given=AJ, given-i=AJ and Arnab, Anurag and Dehghani, Mostafa and Angelova, Anelia},
+  date = {2021},
+  volume = {34},
+  pages = {12786--12797},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2021/hash/6a30e32e56fce5cf381895dfe6ca7b6f-Abstract.html},
+  urldate = {2025-05-05},
+  abstract = {In this paper, we introduce a novel visual representation learning which relies on a handful of adaptively learned tokens, and which is applicable to both image and video understanding tasks. Instead of relying on hand-designed splitting strategies to obtain visual tokens and processing a large number of densely sampled patches for attention, our approach learns to mine important tokens in visual data. This results in efficiently and effectively finding a few important visual tokens and enables modeling of pairwise attention between such tokens, over a longer temporal horizon for videos, or the spatial content in image frames. Our experiments demonstrate strong performance on several challenging benchmarks for video recognition tasks. Importantly, due to our tokens being adaptive, we accomplish competitive results at significantly reduced computational cost. We establish new state-of-the-arts on multiple video datasets, including Kinetics-400, Kinetics-600, Charades, and AViD.},
+  file = {/Users/juntangwang/Zotero/storage/QTXVFUS8/Ryoo et al. - 2021 - TokenLearner Adaptive space-time tokenization for videos.pdf}
+}
+
+@online{schuhmannLAION5BOpenLargescale2022,
+  title = {{{LAION-5B}}: {{An}} Open Large-Scale Dataset for Training next Generation Image-Text Models},
+  shorttitle = {{{LAION-5B}}},
+  author = {Schuhmann, Christoph and Beaumont, Romain and Vencu, Richard and Gordon, Cade and Wightman, Ross and Cherti, Mehdi and Coombes, Theo and Katta, Aarush and Mullis, Clayton and Wortsman, Mitchell and Schramowski, Patrick and Kundurthy, Srivatsa and Crowson, Katherine and Schmidt, Ludwig and Kaczmarczyk, Robert and Jitsev, Jenia},
+  date = {2022-10-16},
+  eprint = {2210.08402},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2210.08402},
+  url = {http://arxiv.org/abs/2210.08402},
+  urldate = {2025-05-05},
+  abstract = {Groundbreaking language-vision architectures like CLIP and DALL-E proved the utility of training on large amounts of noisy image-text data, without relying on expensive accurate labels used in standard vision unimodal supervised learning. The resulting models showed capabilities of strong text-guided image generation and transfer to downstream tasks, while performing remarkably at zero-shot classification with noteworthy out-of-distribution robustness. Since then, large-scale language-vision models like ALIGN, BASIC, GLIDE, Flamingo and Imagen made further improvements. Studying the training and capabilities of such models requires datasets containing billions of image-text pairs. Until now, no datasets of this size have been made openly available for the broader research community. To address this problem and democratize research on large-scale multi-modal models, we present LAION-5B - a dataset consisting of 5.85 billion CLIP-filtered image-text pairs, of which 2.32B contain English language. We show successful replication and fine-tuning of foundational models like CLIP, GLIDE and Stable Diffusion using the dataset, and discuss further experiments enabled with an openly available dataset of this scale. Additionally we provide several nearest neighbor indices, an improved web-interface for dataset exploration and subset generation, and detection scores for watermark, NSFW, and toxic content detection. Announcement page https://laion.ai/laion-5b-a-new-era-of-open-large-scale-multi-modal-datasets/},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning},
+  file = {/Users/juntangwang/Zotero/storage/XBELUERN/Schuhmann et al. - 2022 - LAION-5B An open large-scale dataset for training next generation image-text models.pdf;/Users/juntangwang/Zotero/storage/6MC55X72/2210.html}
 }
 
 @online{simeoniLocalizingObjectsSelfsupervised2021,
@@ -176,6 +475,18 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Computer Vision and Pattern Recognition,notion},
   file = {/Users/juntangwang/Zotero/storage/DMPPTKAF/Siméoni et al. - 2021 - Localizing objects with self-supervised transformers and no labels.pdf;/Users/juntangwang/Zotero/storage/LX8G8WIW/2109.html}
+}
+
+@article{somepalliSAINTImprovedNeural2021,
+  title = {{{SAINT}}: {{Improved}} Neural Networks for Tabular Data via Row Attention and Contrastive Pre-Training},
+  shorttitle = {{{SAINT}}},
+  author = {Somepalli, Gowthami and Schwarzschild, Avi and Goldblum, Micah and Bruss, C. Bayan and Goldstein, Tom},
+  date = {2021-10-06},
+  url = {https://openreview.net/forum?id=nL2lDlsrZU},
+  urldate = {2025-05-05},
+  abstract = {Tabular data underpins numerous high-impact applications of machine learning from fraud detection to genomics and healthcare. Classical approaches to solving tabular problems, such as gradient boosting and random forests, are widely used by practitioners. However, recent deep learning methods have achieved a degree of performance competitive with popular techniques. We devise a hybrid deep learning approach to solving tabular data problems. Our method, SAINT, performs attention over both rows and columns, and it includes an enhanced embedding method. We also study a new contrastive self-supervised pre-training method for use when labels are scarce. SAINT consistently improves performance over previous deep learning methods, and it even performs competitively with gradient boosting methods, including XGBoost, CatBoost, and LightGBM, on average over \$30\$ benchmark datasets in regression, binary classification, and multi-class classification tasks.},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/2V839LTZ/Somepalli et al. - 2021 - SAINT Improved neural networks for tabular data via row attention and contrastive pre-training.pdf}
 }
 
 @misc{stanford-ribonanza-rna-folding,
@@ -202,6 +513,75 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Computer Vision and Pattern Recognition,notion},
   file = {/Users/juntangwang/Zotero/storage/DTCFVLKC/Touvron et al. - 2022 - DeiT III Revenge of the ViT.pdf;/Users/juntangwang/Zotero/storage/X7YYF4AU/2204.html}
+}
+
+@inproceedings{touvronGoingDeeperImage2021,
+  title = {Going Deeper with Image Transformers},
+  booktitle = {2021 {{IEEE}}/{{CVF International Conference}} on {{Computer Vision}} ({{ICCV}})},
+  author = {Touvron, Hugo and Cord, Matthieu and Sablayrolles, Alexandre and Synnaeve, Gabriel and Jegou, Herve},
+  date = {2021-10},
+  pages = {32--42},
+  publisher = {IEEE},
+  location = {Montreal, QC, Canada},
+  doi = {10.1109/ICCV48922.2021.00010},
+  url = {https://ieeexplore.ieee.org/document/9710634/},
+  urldate = {2025-05-05},
+  abstract = {Transformers have been recently adapted for large scale image classification, achieving high scores shaking up the long supremacy of convolutional neural networks. However the optimization of vision transformers has been little studied so far. In this work, we build and optimize deeper transformer networks for image classification. In particular, we investigate the interplay of architecture and optimization of such dedicated transformers. We make two architecture changes that significantly improve the accuracy of deep transformers. This leads us to produce models whose performance does not saturate early with more depth, for instance we obtain 86.5\% top-1 accuracy on Imagenet when training with no external data, we thus attain the current sate of the art with less floating-point operations and parameters. Our best model establishes the new state of the art on Imagenet with Reassessed labels and Imagenet-V2 / match frequency, in the setting with no additional training data. We share our code and models1.},
+  eventtitle = {2021 {{IEEE}}/{{CVF International Conference}} on {{Computer Vision}} ({{ICCV}})},
+  isbn = {978-1-6654-2812-5},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/GJAG9WFX/Touvron et al. - 2021 - Going deeper with image transformers.pdf}
+}
+
+@article{van2008visualizing,
+  title = {Visualizing Data Using T-{{SNE}}.},
+  author = {Van der Maaten, Laurens and Hinton, Geoffrey},
+  date = {2008},
+  journaltitle = {Journal of machine learning research},
+  shortjournal = {Journal of machine learning research},
+  volume = {9},
+  number = {11},
+  pages = {2579--2605},
+  issn = {1533-7928},
+  url = {http://jmlr.org/papers/v9/vandermaaten08a.html},
+  urldate = {2025-05-03},
+  abstract = {We present a new technique called "t-SNE" that visualizes high-dimensional data by giving each datapoint a location in a two or three-dimensional map. The technique is a variation of Stochastic Neighbor Embedding (Hinton and Roweis, 2002) that is much easier to optimize, and produces significantly better visualizations by reducing the tendency to crowd points together in the center of the map. t-SNE is better than existing techniques at creating a single map that reveals structure at many different scales. This is particularly important for high-dimensional data that lie on several different, but related, low-dimensional manifolds, such as images ofobjects from multiple classes seen from multiple viewpoints. For visualizing the structure of very large data sets, we show how t-SNE can use random walks on neighborhood graphs to allow the implicit structure of all of the data to influence the way in which a subset of the data is displayed. We illustrate the performance of t-SNE on a wide variety of data sets and compare it with many other non-parametric visualization techniques, including Sammon mapping, Isomap, and Locally Linear Embedding. The visualizations produced by t-SNE are significantly better than those produced by the other techniques on almost all of the data sets.},
+  file = {/Users/juntangwang/Zotero/storage/Z52S675F/vandermaaten08a.pdf}
+}
+
+@online{wangDeepMixtureExperts2019,
+  title = {Deep Mixture of Experts via Shallow Embedding},
+  author = {Wang, Xin and Yu, Fisher and Dunlap, Lisa and Ma, Yi-An and Wang, Ruth and Mirhoseini, Azalia and Darrell, Trevor and Gonzalez, Joseph E.},
+  date = {2019-04-11},
+  eprint = {1806.01531},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1806.01531},
+  url = {http://arxiv.org/abs/1806.01531},
+  urldate = {2025-05-05},
+  abstract = {Larger networks generally have greater representational power at the cost of increased computational complexity. Sparsifying such networks has been an active area of research but has been generally limited to static regularization or dynamic approaches using reinforcement learning. We explore a mixture of experts (MoE) approach to deep dynamic routing, which activates certain experts in the network on a per-example basis. Our novel DeepMoE architecture increases the representational power of standard convolutional networks by adaptively sparsifying and recalibrating channel-wise features in each convolutional layer. We employ a multi-headed sparse gating network to determine the selection and scaling of channels for each input, leveraging exponential combinations of experts within a single convolutional network. Our proposed architecture is evaluated on four benchmark datasets and tasks, and we show that Deep-MoEs are able to achieve higher accuracy with lower computation than standard convolutional networks.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition},
+  file = {/Users/juntangwang/Zotero/storage/AFU2F94X/Wang et al. - 2019 - Deep mixture of experts via shallow embedding.pdf;/Users/juntangwang/Zotero/storage/BPGSIX32/1806.html}
+}
+
+@article{xuEvoViTSlowfastToken2022,
+  title = {Evo-{{ViT}}: {{Slow-fast}} Token Evolution for Dynamic Vision Transformer},
+  shorttitle = {Evo-{{ViT}}},
+  author = {Xu, Yifan and Zhang, Zhijie and Zhang, Mengdan and Sheng, Kekai and Li, Ke and Dong, Weiming and Zhang, Liqing and Xu, Changsheng and Sun, Xing},
+  date = {2022-06-28},
+  journaltitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  shortjournal = {AAAI},
+  volume = {36},
+  number = {3},
+  pages = {2964--2972},
+  issn = {2374-3468, 2159-5399},
+  doi = {10.1609/aaai.v36i3.20202},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/20202},
+  urldate = {2025-05-05},
+  abstract = {Vision transformers (ViTs) have attracted considerable research attention recently, but the huge computational cost is still a severe issue. A mainstream paradigm for computation reduction aims to reduce the number of tokens given that the computation complexity of ViT is quadratic with respect to the input sequence length. Existing designs include structured spatial compression that uses a progressive shrinking pyramid to reduce the computations of large feature maps, and unstructured token pruning that dynamically drops redundant tokens. However, limitations of existing token pruning lie in the following aspects: 1) the incomplete spatial structure caused by pruning is incompatible with structured spatial compression that is commonly used in modern deep-narrow transformers; 2) it usually requires a time-consuming pretraining procedure. To address the limitations and expand the applicable scenario of token pruning, we present Evo-ViT, a self-motivated slow-fast token evolution approach for vision transformers. Specifically, we conduct unstructured instancewise token selection by taking advantage of the simple and effective global class attention that is native to vision transformers. Then, we propose to update the selected informative tokens and uninformative tokens with different computation paths, namely, slow-fast updating. Since slow-fast updating mechanism maintains the spatial structure and information flow, Evo-ViT can accelerate vanilla transformers of both flat and deep-narrow structures from the very beginning of the training process. Experimental results demonstrated that our method significantly reduces the computational cost of vision transformers while maintaining comparable performance on image classification. For example, our method accelerates DeiT-S by over 60\% throughput while only sacrificing 0.4\% top-1 accuracy on ImageNet-1K, outperforming current token pruning methods on both accuracy and efficiency.},
+  langid = {english},
+  file = {/Users/juntangwang/Zotero/storage/2P4RSVTL/Xu et al. - 2022 - Evo-ViT Slow-fast token evolution for dynamic vision transformer.pdf}
 }
 
 @online{zhangDINODETRImproved2022,
