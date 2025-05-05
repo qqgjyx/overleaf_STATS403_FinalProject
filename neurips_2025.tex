@@ -1,7 +1,7 @@
 \documentclass{article}
 
 % ready for submission
-% \usepackage{neurips_2025}
+% \usepackage[nonatbib]{neurips_2025}
 
 
 % to compile a preprint version, e.g., for submission to arXiv, add add the
@@ -124,35 +124,41 @@ doi=false,isbn=false,url=false
     Learning generic features for real-world data has long been a central goal in machine learning.
     Leveraging submodules from supervised or self-supervised models as feature extractors has attracted increasing attention in recent years.
     Among these, Vision Transformers (ViTs) have shown strong performance—but occasionally produce \emph{high‑norm outlier tokens} in low‑information image regions, degrading downstream dense‑prediction tasks.
-    To mitigate this, Darcet~\textit{et al.} (ICLR 2024) propose \RegTok tokens—learnable placeholders discarded at output—as a lightweight remedy. 
+    To mitigate this, Darcet~\emph{et~al.} propose register tokens—learnable placeholders discarded at output—as a lightweight remedy. 
     In this report, we reproduce their key findings, port the method to several new real‑world benchmarks, and introduce an \emph{adaptive register allocator} that learns the pseudo‑optimal number of registers online.
   % Code is released at \url{https://github.com/your‑lab/vit‑registers‑plus}.
 \end{abstract}
 
-
+% ---------------------------------------------------------------------------- %
+%  INTRODUCTION
 % ---------------------------------------------------------------------------- %
 \section{Introduction}
 \label{sec:intro}
-Embedding real-world data into general-purpose features has long been a central goal in machine learning. Classical methods such as PCA~\citep{jolliffePrincipalComponentAnalysis1986}, t-SNE~\citep{maatenVisualizingDataUsing2008}, and SIFT~\citep{loweDistinctiveImageFeatures2004} rely on strong assumptions about data distribution and were widely used before the advent of deep learning. The pursuit of general-purpose features remains relevant today, largely because labeled data is expensive—either due to scale or the need for domain expertise (\emph{e.g.}, medical imaging or language translation).
+Embedding real-world data into general-purpose features has long been a central goal in machine learning.
+Classical methods such as PCA~\citep{jolliffePrincipalComponentAnalysis1986}, t-SNE~\citep{maatenVisualizingDataUsing2008}, and SIFT~\citep{loweDistinctiveImageFeatures2004} rely on strong handcrafted assumptions and were widely used prior to the rise of deep learning. 
+The pursuit of general-purpose features remains relevant today, largely because labeled data is expensive—either due to scale or the need for domain expertise (\emph{e.g.}, medical imaging or language translation).
 
-Under the philosophy of transfer learning, pretraining a model for a task with abundant data and extracting a subset of the model to use as a feature extractor for downstream tasks seems a natural and effective solution.
-Besides supervised methods for training a model, self-supervised methods based on the Transformer architecture, especially ViTs, have attracted significant attention due to their high prediction performance on downstream tasks and the intriguing ability of some models to provide unsupervised segmentations~\citep{caronEmergingPropertiesSelfsupervised2021}.
-Recent studies~\citep{caronEmergingPropertiesSelfsupervised2021,oquabDINOv2LearningRobust2024} have shown that self-supervised ViT models, like DINO~\cite{caronEmergingPropertiesSelfsupervised2021}, can be pre-trained once and reused everywhere, providing generic visual features that rival supervised counterparts (see \cref{fig:attn6}).
-
-Utilizing these properties, object discovery algorithms such as LOST~\cite{simeoniLocalizingObjectsSelfsupervised2021} build on top of DINO. Such algorithms are designed to detect objects using feature maps. They have opened up a new branch of computer vision. However, DINOv2~\cite{oquabDINOv2LearningRobust2024}, a follow-up to DINO, was found to do worse with LOST~\cite{darcetVisionTransformersNeed2024}.
+Under the transfer‑learning paradigm, a common strategy is to pretrain a model on a data‑rich task and later reuse part of that model as a frozen feature extractor for downstream problems.
+Beyond conventional supervised pretraining, self‑supervised methods—especially Vision Transformers (ViTs)—have gained prominence for two reasons: (i) they achieve strong downstream accuracy and (ii) some of them, such as DINO~\citep{caronEmergingPropertiesSelfsupervised2021}, exhibit the striking ability to delineate objects without any labels, as illustrated in~\cref{fig:attn6}.
+Recent work shows that such self‑supervised ViTs can be “pretrained once, reused everywhere,” providing generic visual features that rival those from fully supervised counterparts~\citep{caronEmergingPropertiesSelfsupervised2021, oquabDINOv2LearningRobust2024}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{figures/attn6.png}
-    \caption{Self-attention from a ViT trained with no supervision~\citep{caronEmergingPropertiesSelfsupervised2021}.}
+    \caption{Attention maps from the \texttt{[CLS]} query produced by the last attention layer~\citep{caronEmergingPropertiesSelfsupervised2021}.}
     \label{fig:attn6}
 \end{figure}
 
-Addressing the issue, \citet{darcetVisionTransformersNeed2024} observed that large or long-trained ViTs exhibit spurious \emph{artifacts}: patch tokens whose norm is anomalously high yet carry little local information (see \cref{fig:allvits}). These artifacts disrupt tasks—such as LOST—that assume smooth feature maps. 
-As a remedy, they proposed to insert a small set of learnable \RegTok tokens at the input, explicitly earmarking capacity for global context and restoring clean patch features.
-The remedy was shown to be effective in improving the performance on algorithms that are sensitive to artifacts.
+Leveraging DINO’s patch‑level features, object‑discovery algorithms such as LOST~\citep{simeoniLocalizingObjectsSelfsupervised2021} can localize objects without supervision.
+DINOv2~\citep{oquabDINOv2LearningRobust2024}—a follow‑up trained to excel at dense prediction—indeed yields strong frozen‑backbone results on monocular depth and semantic segmentation, yet performs surprisingly poorly when paired with LOST~\citep{darcetVisionTransformersNeed2024}.
+This discrepancy suggests that DINOv2’s representations differ qualitatively from DINO’s and motivates a closer inspection of ViT feature maps.
 
-\begin{figure}[t]
+\citet{darcetVisionTransformersNeed2024} traced this failure to \emph{artifacts} present in most ViTs—including DINOv2, but absent from DINO. 
+These artifacts appear as patch tokens whose $\ell_2$‑norm is abnormally large yet encode little local information (see~\cref{fig:allvits}). 
+Such outliers corrupt methods like LOST, which assume smooth, semantically meaningful feature maps. 
+Similar artifacts also surface in several supervised Vision Transformers, underscoring that DINO is the exception rather than the rule.
+
+\begin{figure}[h]
     \centering
     {\footnotesize
     \setlength{\tabcolsep}{2.5pt} %
@@ -195,49 +201,60 @@ The remedy was shown to be effective in improving the performance on algorithms 
     \end{tabular}
     }
     \caption{
-    %   We consider ViTs trained with label supervision (DeiT-III), text-supervision (OpenCLIP) or self-supervision (DINO and DINOv2).
+      We consider ViTs trained with label supervision (DeiT-III), text-supervision (OpenCLIP) or self-supervision (DINO and DINOv2).
       \emph{All models but DINO} exhibit peaky outlier values in the attention maps~\cite{darcetVisionTransformersNeed2024}.
     }  
     \label{fig:allvits}
 \end{figure}
 
-In this study, we summarize and replicate the key findings of \citet{darcetVisionTransformersNeed2024}. Jumpping out of the scope of CV, further extend the method to other tasks (\emph{e.g.}, sequence modeling and tabular data). We also report our findings of similar behavior between specific \RegTok and \emph{Multi-Resolution Clustering}~(configurations), and behavior of position induced \RegTok ordering. In response to that, we propose a novel adaptive register allocator that learns the pseudo-optimal number of registers online. Which shows consistent best number of registers for different tasks.
+As a remedy and inspired by~\citet{bulatovRecurrentMemoryTransformer2022}, \citet{darcetVisionTransformersNeed2024} prepend a small set of learnable register tokens (\RegTok) to the input sequence; these tokens absorb global context and are dropped before features are fed to downstream heads. 
+Empirically, this simple change suppresses artifacts and consistently restores—sometimes even improves—performance on tasks sensitive to feature‑map quality.
 
+Beyond replication, our contributions would include:
 
-% DINOv2~\citep{oquab2023dinov2}, a follow-up to DINO, provides features that allow tackling dense prediction tasks.
-% DINOv2 features \new{lead to successful}\old{strongly perform} monocular depth estimation and semantic segmentation with a frozen backbone and linear models.
-% Despite the strong performance on dense tasks, we observed that DINOv2 is surprisingly incompatible with LOST.
-% When used to extract features, it delivers disappointing performance, only on par with supervised alternative backbones in this scenario. 
-% \new{This suggests that DINOv2 behaves differently than DINO. The investigation described in this work notably exposes the presence of artifacts in the feature maps of DINOv2 that were not present in the first version of this model.}
-% \old{This suggests that a different behavior was introduced in the learning algorithm, and we set a goal to figure out what happened. 
-% The investigation described in this work exposes the presence of artifacts in the feature maps of DINOv2 that were not present in DINO.}
-% These are observable qualitatively using straightforward methods. 
-% \new{Also surprisingly}, applying the same observations to supervised \old{models}\new{vision transformers} exposes similar artifacts, as shown in Fig.~\ref{fig:allvits}.
-% This suggests that DINO is, in fact, an exception, while DINOv2 models match the baseline behavior of vision transformers. 
+\paragraph{Cross‑domain extension.}
+Beyond classic CV benchmarks, we extend the register‑token idea to sequence‑modeling and tabular settings, and uncover analogous artifacts in those modalities.
 
-
-\paragraph{Why do artifacts arise?}  Scaling depth, width, or training epochs encourages ViTs to repurpose redundant background patches as a scratchpad for global context, manifesting as outliers (\cref{fig:artifacts_evolution}).  While not intrinsically harmful for classification, they confound dense‑prediction heads.
-
-\paragraph{Register tokens to the rescue.}  Inspired by the \emph{Recurrent Memory Transformer}~\cite{bulatovRecurrentMemoryTransformer2022}, \citet{darcetVisionTransformersNeed2024} insert a small set of learnable \RegTok tokens at the input, explicitly earmarking capacity for global context and restoring clean patch features.  This fix is training‑free, adds negligible compute, and even improves accuracy on several vision benchmarks.
-
-\paragraph{Contributions.}  Building on our course proposal presentation, we:
+\paragraph{New observations.}
+During this exploration we identify two phenomena:  
 \begin{enumerate}
-\item \textbf{Reproduce} the artifact analysis and register remedy on ImageNet‑1k.
-\item \textbf{Generalise} to Tiny‑ImageNet++ and ADE20k, two datasets absent from the original paper.
-\item \textbf{Diagnose} surprising failures when $\nreg>8$ on low‑resolution inputs.
-\item \textbf{Extend} the method with an \emph{adaptive register allocator} that selects $\nreg$ per image via a lightweight gating network.
+    \item Certain \RegTok tokens behave similarly to components discovered by our
+          Multi‑Resolution Graph‑based Clustering method (GraMixC; see Appendix~\ref{sec:gmc}).
+    \item Registers acquire a stable, \emph{position‑dependent} ordering—appending them
+          after patch tokens yields one specialization order ($\text{reg}_1\!\rightarrow\!\text{reg}_r$),
+          prepending reverses it, and scrambling positional encoding destroys the effect and
+          degrades performance.
 \end{enumerate}
 
-\cref{tab:summary} summarises empirical gains.
+\paragraph{Adaptive allocation.}
+Motivated by these findings, we introduce an \emph{adaptive register allocator} that learns a pseudo‑optimal number of registers online; across diverse tasks it converges to the same “best” register count, matching or exceeding the performance of fixed‑register baselines.
 
 % ---------------------------------------------------------------------------- %
-\section{Related Work}
+% Related works
+% ---------------------------------------------------------------------------- %
+\section{Related Works}
 \label{sec:related}
-\textbf{Generic ViT representation learning.}  The success of self‑supervision on ViTs started with DINO~\cite{caronEmergingPropertiesSelfsupervised2021} and was scaled in DINOv2~\cite{oquabDINOv2LearningRobust2024}.  CLIP~\cite{ilharco_gabriel_2021_5143773} aligns vision–language features but still suffers from artifacts (\cref{fig:artifacts}).
 
-\textbf{Auxiliary tokens and memory.}  After the \texttt{[CLS]} token, numerous works add task‑specific tokens.  The \emph{register tokens} of \citet{darcetVisionTransformersNeed2024} differ by being discarded at output.  RMT~\cite{bulatovRecurrentMemoryTransformer2022} appends \emph{memory} to language models, but with recurrent updates; we adopt their motivation yet retain the standard forward pass.
+\paragraph{Universal representation learning.}
+The promise of learning once and transferring everywhere dates back to distributed word embeddings such as \emph{word2vec} and GloVe in NLP, then BERT‑style masked‑language pre‑training~\citep{devlinBERT2019}.  Similar ideas power wav2vec\,2.0 for speech~\citep{baevskiWav2vec2020} and large language models that act as backbone features for dozens of downstream tasks.  In vision, ImageNet‑pretrained CNNs were the de‑facto universal encoders for a decade~\citep{krizhevskyImageNet2012}.  The economic rationale—labels are scarce, raw data abundant—remains the same across modalities.
 
-\textbf{Token pruning and sparsity.}  Methods such as token merging or dropout strive to reduce compute; conversely \ours increases sequence length modestly to sanitise features.
+\paragraph{Self‑supervised visual backbones.}
+Contrastive or reconstruction objectives such as SimCLR~\citep{chenSimCLR2020}, MoCo~\citep{heMoCo2020}, BYOL~\citep{grillBYOL2020} and MAE~\citep{heMAE2022} showed that high‑capacity encoders can be trained without labels.  Vision Transformers (ViTs) widened this gap: DINO~\citep{caronEmergingPropertiesSelfsupervised2021} famously yields attention maps that coincide with object masks, while DINOv2 improved dense‑prediction accuracy but introduced norm outliers that motivate our study.
+
+\paragraph{Auxiliary / memory tokens in Transformers.}
+Adding extra learnable tokens is a long‑standing trick.  Transformer‑XL and Compressive Transformer maintain recurrent memory for language modelling, while RMT introduces explicit \emph{memory tokens} to extend context~\citep{bulatovRecurrentMemoryTransformer2022}.  In vision, TokenLearner~\citep{ryooTokenLearner2022} and DynamicViT~\citep{raoDynamicViT2021} prune tokens to save FLOPs; Perceiver IO fuses multi‑modal inputs via latent arrays~\citep{jaeglePerceiverIO2021}.  Register tokens~\citep{darcetVisionTransformersNeedRegisters2024} invert this logic: instead of \emph{removing} tokens, they \emph{add} a handful of placeholders that soak up global context and are discarded afterwards.
+
+\paragraph{Artefact analysis in ViTs.}
+Several works study token norms or saliency.  Goyal \textit{et al.} prune ViTs by dropping high‑norm patches, while Jacob \textit{et al.} correlate norm peaks with redundant background.  Darcet \textit{et al.} showed that such high‑norm patches degrade dense tasks and traced the issue to capacity pressure; our experiments confirm their findings and extend them beyond images.  The reproducibility study of \citet{anonymousReproStudy2025} further validated that fine‑tuning with registers or norm regularisation can mitigate the artefacts.
+
+\paragraph{Cross‑modal Transformer transfer.}
+Table and sequence domains also adopt ViT‑style blocks: TabTransformer~\citep{huangTabTransformer2020}, SAINT~\citep{somepalliSAINT2021} for tabular data, Genome‑ViT for genomics, and Perceiver‑IO for audio‑visual fusion.  We are the first to report norm‑outlier artefacts and register‑token benefits in these non‑vision settings.
+
+\paragraph{Adaptive resource allocation.}
+Dynamic architectures such as LayerScale~\citep{touvronLayerScale2021}, DeepMoE~\citep{wangDeepMoE2021} and early‑exit Transformers learn to allocate depth or width per input.  Our \emph{adaptive register allocator} follows this line: instead of fixing the number of registers, we predict it online, finding that the model converges to a consistent optimum across tasks.
+
+\smallskip
+In summary, our work sits at the intersection of generic representation learning, auxiliary‑token design, and Transformer interpretability.  By extending register tokens across modalities and introducing an adaptive allocator, we push this line of research beyond the confines of vision alone.
 
 % ---------------------------------------------------------------------------- %
 \section{Methodology}
@@ -320,8 +337,13 @@ Adding a handful of \RegTok tokens is a cheap, general remedy for high‑norm ar
 
 \appendix
 
-\section{Technical Appendices and Supplementary Material}
+\section{Multi‑Resolution Graph‑based Clustering for Downstream Prediction}
+\label{sec:gmc}
 
+For completeness we provide a pointer to our in‑progress methodology, ``GraMixC: Multi‑Resolution Graph‑based Clustering for Downstream Prediction.''
+A brief description, code, and preliminary figures are available at         \url{https://tang.qqgjyx.com/files/paper2.pdf}
+
+GraMixC is still under active development and has not yet been peer‑reviewed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}
